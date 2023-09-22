@@ -1,0 +1,210 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/donge/WorkSpace/Program/Desktop_focus/Firmware/Epaper_Driver/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+0	compile_commands.json	/^   "arm-none-eabi-gcc",$/;"	s	array:0.arguments
+0	compile_commands.json	/^   "arm-none-eabi-gcc",$/;"	s	array:1.arguments
+0	compile_commands.json	/^ {$/;"	o
+1	compile_commands.json	/^   "-E",$/;"	s	array:0.arguments
+1	compile_commands.json	/^   "-Wp,-MD,\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/.epaper_d/;"	s	array:1.arguments
+1	compile_commands.json	/^ {$/;"	o
+10	compile_commands.json	/^   "-I.\/arch\/arm\/include\/generated\/uapi",$/;"	s	array:1.arguments
+10	compile_commands.json	/^   "-I.\/include",$/;"	s	array:0.arguments
+11	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/arch\/arm\/include\/uapi",$/;"	s	array:0.arguments
+11	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include\/uapi",$/;"	s	array:1.arguments
+12	compile_commands.json	/^   "-I.\/arch\/arm\/include\/generated\/uapi",$/;"	s	array:0.arguments
+12	compile_commands.json	/^   "-I.\/include\/generated\/uapi",$/;"	s	array:1.arguments
+13	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include\/uapi",$/;"	s	array:0.arguments
+13	compile_commands.json	/^   "-include",$/;"	s	array:1.arguments
+14	compile_commands.json	/^   "-I.\/include\/generated\/uapi",$/;"	s	array:0.arguments
+14	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include\/linux\/kconfig.h",$/;"	s	array:1.arguments
+15	compile_commands.json	/^   "-include",$/;"	s	array:0.arguments
+15	compile_commands.json	/^   "-include",$/;"	s	array:1.arguments
+16	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include\/linux\/compiler_types./;"	s	array:1.arguments
+16	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include\/linux\/kconfig.h",$/;"	s	array:0.arguments
+17	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver",$/;"	s	array:1.arguments
+17	compile_commands.json	/^   "-include",$/;"	s	array:0.arguments
+18	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver",$/;"	s	array:1.arguments
+18	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include\/linux\/compiler_types./;"	s	array:0.arguments
+19	compile_commands.json	/^   "-D__KERNEL__",$/;"	s	array:1.arguments
+19	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver",$/;"	s	array:0.arguments
+2	compile_commands.json	/^   "-D__GENKSYMS__",$/;"	s	array:0.arguments
+2	compile_commands.json	/^   "-nostdinc",$/;"	s	array:1.arguments
+20	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver",$/;"	s	array:0.arguments
+20	compile_commands.json	/^   "-mlittle-endian",$/;"	s	array:1.arguments
+21	compile_commands.json	/^   "-D__KERNEL__",$/;"	s	array:0.arguments
+21	compile_commands.json	/^   "-Wall",$/;"	s	array:1.arguments
+22	compile_commands.json	/^   "-Wundef",$/;"	s	array:1.arguments
+22	compile_commands.json	/^   "-mlittle-endian",$/;"	s	array:0.arguments
+23	compile_commands.json	/^   "-Wall",$/;"	s	array:0.arguments
+23	compile_commands.json	/^   "-Wstrict-prototypes",$/;"	s	array:1.arguments
+24	compile_commands.json	/^   "-Wno-trigraphs",$/;"	s	array:1.arguments
+24	compile_commands.json	/^   "-Wundef",$/;"	s	array:0.arguments
+25	compile_commands.json	/^   "-Wstrict-prototypes",$/;"	s	array:0.arguments
+25	compile_commands.json	/^   "-fno-strict-aliasing",$/;"	s	array:1.arguments
+26	compile_commands.json	/^   "-Wno-trigraphs",$/;"	s	array:0.arguments
+26	compile_commands.json	/^   "-fno-common",$/;"	s	array:1.arguments
+27	compile_commands.json	/^   "-fno-strict-aliasing",$/;"	s	array:0.arguments
+27	compile_commands.json	/^   "-fshort-wchar",$/;"	s	array:1.arguments
+28	compile_commands.json	/^   "-Werror-implicit-function-declaration",$/;"	s	array:1.arguments
+28	compile_commands.json	/^   "-fno-common",$/;"	s	array:0.arguments
+29	compile_commands.json	/^   "-Wno-format-security",$/;"	s	array:1.arguments
+29	compile_commands.json	/^   "-fshort-wchar",$/;"	s	array:0.arguments
+3	compile_commands.json	/^   "-Wp,-MD,\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/.epaper_d/;"	s	array:0.arguments
+3	compile_commands.json	/^   "-isystem",$/;"	s	array:1.arguments
+30	compile_commands.json	/^   "-Werror-implicit-function-declaration",$/;"	s	array:0.arguments
+30	compile_commands.json	/^   "-std=gnu89",$/;"	s	array:1.arguments
+31	compile_commands.json	/^   "-Wno-format-security",$/;"	s	array:0.arguments
+31	compile_commands.json	/^   "-fno-PIE",$/;"	s	array:1.arguments
+32	compile_commands.json	/^   "-DCC_HAVE_ASM_GOTO",$/;"	s	array:1.arguments
+32	compile_commands.json	/^   "-std=gnu89",$/;"	s	array:0.arguments
+33	compile_commands.json	/^   "-fno-PIE",$/;"	s	array:0.arguments
+33	compile_commands.json	/^   "-fno-dwarf2-cfi-asm",$/;"	s	array:1.arguments
+34	compile_commands.json	/^   "-DCC_HAVE_ASM_GOTO",$/;"	s	array:0.arguments
+34	compile_commands.json	/^   "-fno-ipa-sra",$/;"	s	array:1.arguments
+35	compile_commands.json	/^   "-fno-dwarf2-cfi-asm",$/;"	s	array:0.arguments
+35	compile_commands.json	/^   "-mabi=aapcs-linux",$/;"	s	array:1.arguments
+36	compile_commands.json	/^   "-fno-ipa-sra",$/;"	s	array:0.arguments
+36	compile_commands.json	/^   "-mfpu=vfp",$/;"	s	array:1.arguments
+37	compile_commands.json	/^   "-funwind-tables",$/;"	s	array:1.arguments
+37	compile_commands.json	/^   "-mabi=aapcs-linux",$/;"	s	array:0.arguments
+38	compile_commands.json	/^   "-marm",$/;"	s	array:1.arguments
+38	compile_commands.json	/^   "-mfpu=vfp",$/;"	s	array:0.arguments
+39	compile_commands.json	/^   "-Wa,-mno-warn-deprecated",$/;"	s	array:1.arguments
+39	compile_commands.json	/^   "-funwind-tables",$/;"	s	array:0.arguments
+4	compile_commands.json	/^   "-nostdinc",$/;"	s	array:0.arguments
+4	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/tools\/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar\/gcc-arm-no/;"	s	array:1.arguments
+40	compile_commands.json	/^   "-D__LINUX_ARM_ARCH__=7",$/;"	s	array:1.arguments
+40	compile_commands.json	/^   "-marm",$/;"	s	array:0.arguments
+41	compile_commands.json	/^   "-Wa,-mno-warn-deprecated",$/;"	s	array:0.arguments
+41	compile_commands.json	/^   "-march=armv7-a",$/;"	s	array:1.arguments
+42	compile_commands.json	/^   "-D__LINUX_ARM_ARCH__=7",$/;"	s	array:0.arguments
+42	compile_commands.json	/^   "-msoft-float",$/;"	s	array:1.arguments
+43	compile_commands.json	/^   "-Uarm",$/;"	s	array:1.arguments
+43	compile_commands.json	/^   "-march=armv7-a",$/;"	s	array:0.arguments
+44	compile_commands.json	/^   "-fno-delete-null-pointer-checks",$/;"	s	array:1.arguments
+44	compile_commands.json	/^   "-msoft-float",$/;"	s	array:0.arguments
+45	compile_commands.json	/^   "-Uarm",$/;"	s	array:0.arguments
+45	compile_commands.json	/^   "-Wno-frame-address",$/;"	s	array:1.arguments
+46	compile_commands.json	/^   "-Wno-format-truncation",$/;"	s	array:1.arguments
+46	compile_commands.json	/^   "-fno-delete-null-pointer-checks",$/;"	s	array:0.arguments
+47	compile_commands.json	/^   "-Wno-format-overflow",$/;"	s	array:1.arguments
+47	compile_commands.json	/^   "-Wno-frame-address",$/;"	s	array:0.arguments
+48	compile_commands.json	/^   "-Wno-format-truncation",$/;"	s	array:0.arguments
+48	compile_commands.json	/^   "-Wno-int-in-bool-context",$/;"	s	array:1.arguments
+49	compile_commands.json	/^   "-O2",$/;"	s	array:1.arguments
+49	compile_commands.json	/^   "-Wno-format-overflow",$/;"	s	array:0.arguments
+5	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/arch\/arm\/include",$/;"	s	array:1.arguments
+5	compile_commands.json	/^   "-isystem",$/;"	s	array:0.arguments
+50	compile_commands.json	/^   "-Wframe-larger-than=1024",$/;"	s	array:1.arguments
+50	compile_commands.json	/^   "-Wno-int-in-bool-context",$/;"	s	array:0.arguments
+51	compile_commands.json	/^   "-O2",$/;"	s	array:0.arguments
+51	compile_commands.json	/^   "-fstack-protector-strong",$/;"	s	array:1.arguments
+52	compile_commands.json	/^   "-Wframe-larger-than=1024",$/;"	s	array:0.arguments
+52	compile_commands.json	/^   "-Wno-unused-but-set-variable",$/;"	s	array:1.arguments
+53	compile_commands.json	/^   "-Wno-unused-const-variable",$/;"	s	array:1.arguments
+53	compile_commands.json	/^   "-fstack-protector-strong",$/;"	s	array:0.arguments
+54	compile_commands.json	/^   "-Wno-unused-but-set-variable",$/;"	s	array:0.arguments
+54	compile_commands.json	/^   "-fomit-frame-pointer",$/;"	s	array:1.arguments
+55	compile_commands.json	/^   "-Wno-unused-const-variable",$/;"	s	array:0.arguments
+55	compile_commands.json	/^   "-fno-var-tracking-assignments",$/;"	s	array:1.arguments
+56	compile_commands.json	/^   "-Wdeclaration-after-statement",$/;"	s	array:1.arguments
+56	compile_commands.json	/^   "-fomit-frame-pointer",$/;"	s	array:0.arguments
+57	compile_commands.json	/^   "-Wno-pointer-sign",$/;"	s	array:1.arguments
+57	compile_commands.json	/^   "-fno-var-tracking-assignments",$/;"	s	array:0.arguments
+58	compile_commands.json	/^   "-Wdeclaration-after-statement",$/;"	s	array:0.arguments
+58	compile_commands.json	/^   "-Wno-stringop-truncation",$/;"	s	array:1.arguments
+59	compile_commands.json	/^   "-Wno-pointer-sign",$/;"	s	array:0.arguments
+59	compile_commands.json	/^   "-fno-strict-overflow",$/;"	s	array:1.arguments
+6	compile_commands.json	/^   "-I.\/arch\/arm\/include\/generated",$/;"	s	array:1.arguments
+6	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/tools\/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar\/gcc-arm-no/;"	s	array:0.arguments
+60	compile_commands.json	/^   "-Wno-stringop-truncation",$/;"	s	array:0.arguments
+60	compile_commands.json	/^   "-fno-merge-all-constants",$/;"	s	array:1.arguments
+61	compile_commands.json	/^   "-fmerge-constants",$/;"	s	array:1.arguments
+61	compile_commands.json	/^   "-fno-strict-overflow",$/;"	s	array:0.arguments
+62	compile_commands.json	/^   "-fno-merge-all-constants",$/;"	s	array:0.arguments
+62	compile_commands.json	/^   "-fno-stack-check",$/;"	s	array:1.arguments
+63	compile_commands.json	/^   "-fconserve-stack",$/;"	s	array:1.arguments
+63	compile_commands.json	/^   "-fmerge-constants",$/;"	s	array:0.arguments
+64	compile_commands.json	/^   "-Werror=implicit-int",$/;"	s	array:1.arguments
+64	compile_commands.json	/^   "-fno-stack-check",$/;"	s	array:0.arguments
+65	compile_commands.json	/^   "-Werror=strict-prototypes",$/;"	s	array:1.arguments
+65	compile_commands.json	/^   "-fconserve-stack",$/;"	s	array:0.arguments
+66	compile_commands.json	/^   "-Werror=date-time",$/;"	s	array:1.arguments
+66	compile_commands.json	/^   "-Werror=implicit-int",$/;"	s	array:0.arguments
+67	compile_commands.json	/^   "-Werror=incompatible-pointer-types",$/;"	s	array:1.arguments
+67	compile_commands.json	/^   "-Werror=strict-prototypes",$/;"	s	array:0.arguments
+68	compile_commands.json	/^   "-Werror=date-time",$/;"	s	array:0.arguments
+68	compile_commands.json	/^   "-Werror=designated-init",$/;"	s	array:1.arguments
+69	compile_commands.json	/^   "-Werror=incompatible-pointer-types",$/;"	s	array:0.arguments
+69	compile_commands.json	/^   "-fmacro-prefix-map=\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/=",$/;"	s	array:1.arguments
+7	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/arch\/arm\/include",$/;"	s	array:0.arguments
+7	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include",$/;"	s	array:1.arguments
+70	compile_commands.json	/^   "-Werror=designated-init",$/;"	s	array:0.arguments
+70	compile_commands.json	/^   "-Wno-packed-not-aligned",$/;"	s	array:1.arguments
+71	compile_commands.json	/^   "-fmacro-prefix-map=\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/=",$/;"	s	array:0.arguments
+71	compile_commands.json	/^   "-std=gnu99",$/;"	s	array:1.arguments
+72	compile_commands.json	/^   "-Wno-packed-not-aligned",$/;"	s	array:0.arguments
+72	compile_commands.json	/^   "-fno-pic",$/;"	s	array:1.arguments
+73	compile_commands.json	/^   "-DKBUILD_BASENAME=epaper_driver.mod",$/;"	s	array:1.arguments
+73	compile_commands.json	/^   "-std=gnu99",$/;"	s	array:0.arguments
+74	compile_commands.json	/^   "-DKBUILD_MODNAME=epaper_driver",$/;"	s	array:1.arguments
+74	compile_commands.json	/^   "-fno-pic",$/;"	s	array:0.arguments
+75	compile_commands.json	/^   "-DMODULE",$/;"	s	array:0.arguments
+75	compile_commands.json	/^   "-DMODULE",$/;"	s	array:1.arguments
+76	compile_commands.json	/^   "-DKBUILD_BASENAME=epaper_driver",$/;"	s	array:0.arguments
+76	compile_commands.json	/^   "-c",$/;"	s	array:1.arguments
+77	compile_commands.json	/^   "-DKBUILD_MODNAME=epaper_driver",$/;"	s	array:0.arguments
+77	compile_commands.json	/^   "-o",$/;"	s	array:1.arguments
+78	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/epaper_driver.c"$/;"	s	array:0.arguments
+78	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/epaper_driver.mod/;"	s	array:1.arguments
+79	compile_commands.json	/^   "\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/epaper_driver.mod/;"	s	array:1.arguments
+8	compile_commands.json	/^   "-I.\/arch\/arm\/include\/generated",$/;"	s	array:0.arguments
+8	compile_commands.json	/^   "-I.\/include",$/;"	s	array:1.arguments
+9	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/arch\/arm\/include\/uapi",$/;"	s	array:1.arguments
+9	compile_commands.json	/^   "-I\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/include",$/;"	s	array:0.arguments
+ARCH	Makefile	/^ARCH=arm$/;"	m
+CROSS_COMPILE	Makefile	/^CROSS_COMPILE=arm-none-eabi-$/;"	m
+DEV_CNT	epaper_driver.c	/^#define DEV_CNT /;"	d	file:
+DEV_NAME	epaper_driver.c	/^#define DEV_NAME /;"	d	file:
+KERNEL_DIR	Makefile	/^KERNEL_DIR=\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/build_image\/build$/;"	m
+____versions	epaper_driver.mod.c	/^static const struct modversion_info ____versions[]$/;"	v	typeref:typename:const struct modversion_info[]__used	file:
+__module_depends	epaper_driver.mod.c	/^static const char __module_depends[]$/;"	v	typeref:typename:const char[]__used	file:
+__this_module	epaper_driver.mod.c	/^__visible struct module __this_module$/;"	v	typeref:struct:module
+all	Makefile	/^all:$/;"	t
+arguments	compile_commands.json	/^  "arguments": [$/;"	a	object:0
+arguments	compile_commands.json	/^  "arguments": [$/;"	a	object:1
+ccflags-y	Makefile	/^ccflags-y := -std=gnu99$/;"	m
+clean	Makefile	/^clean:$/;"	t
+directory	compile_commands.json	/^  "directory": "\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/build_image\/build"/;"	s	object:0
+directory	compile_commands.json	/^  "directory": "\/home\/donge\/WorkSpace\/IMX6ULL\/source\/ebf_linux_kernel\/build_image\/build"/;"	s	object:1
+epaper_char_dev	epaper_driver.c	/^static struct cdev epaper_char_dev;$/;"	v	typeref:struct:cdev	file:
+epaper_char_dev_ops	epaper_driver.c	/^static struct file_operations epaper_char_dev_ops = {$/;"	v	typeref:struct:file_operations	file:
+epaper_class	epaper_driver.c	/^struct class *epaper_class = NULL;$/;"	v	typeref:struct:class *
+epaper_device	epaper_driver.c	/^struct device *epaper_device = NULL;$/;"	v	typeref:struct:device *
+epaper_device_node	epaper_driver.c	/^struct device_node *epaper_device_node;$/;"	v	typeref:struct:device_node *
+epaper_driver	epaper_driver.c	/^struct spi_driver epaper_driver = {$/;"	v	typeref:struct:spi_driver
+epaper_driver_exit	epaper_driver.c	/^static void __exit epaper_driver_exit(void) {$/;"	f	typeref:typename:void __exit	file:
+epaper_driver_init	epaper_driver.c	/^static int __init epaper_driver_init(void) {$/;"	f	typeref:typename:int __init	file:
+epaper_of_match_table	epaper_driver.c	/^static const struct of_device_id epaper_of_match_table[] = {$/;"	v	typeref:typename:const struct of_device_id[]	file:
+epaper_open	epaper_driver.c	/^static int epaper_open(struct inode *inode, struct file *file) {$/;"	f	typeref:typename:int	file:
+epaper_pin_busy	epaper_driver.c	/^int epaper_pin_busy;$/;"	v	typeref:typename:int
+epaper_pin_cs	epaper_driver.c	/^int epaper_pin_cs;$/;"	v	typeref:typename:int
+epaper_pin_dc	epaper_driver.c	/^int epaper_pin_dc;$/;"	v	typeref:typename:int
+epaper_pin_reset	epaper_driver.c	/^int epaper_pin_reset;$/;"	v	typeref:typename:int
+epaper_probe	epaper_driver.c	/^static int epaper_probe(struct spi_device *spi) {$/;"	f	typeref:typename:int	file:
+epaper_release	epaper_driver.c	/^static int epaper_release(struct inode *inode, struct file *filp) {$/;"	f	typeref:typename:int	file:
+epaper_remove	epaper_driver.c	/^static int epaper_remove(struct spi_device *spi) {$/;"	f	typeref:typename:int	file:
+epaper_write	epaper_driver.c	/^static int epaper_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *off) {$/;"	f	typeref:typename:int	file:
+file	compile_commands.json	/^  "file": "\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/epaper_dri/;"	s	object:0
+file	compile_commands.json	/^  "file": "\/home\/donge\/WorkSpace\/Program\/Desktop_focus\/Firmware\/Epaper_Driver\/epaper_dri/;"	s	object:1
+obj-m	Makefile	/^obj-m := epaper_driver.o$/;"	m
+spi_epaper_dev	epaper_driver.c	/^struct spi_device *spi_epaper_dev = NULL;$/;"	v	typeref:struct:spi_device *
+spi_epaper_dev_number	epaper_driver.c	/^static dev_t spi_epaper_dev_number;$/;"	v	typeref:typename:dev_t	file:
