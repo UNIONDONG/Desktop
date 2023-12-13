@@ -84,9 +84,9 @@ int main(void)
 	// EPD_13in3_test();
 	
 	
-	// 	For Test
+	//	For Test
     // if(DEV_Module_Init()!=0){
-        // return -1;
+    //     return -1;
     // }
 	// while(1) {
 	    // EPD_7in5b_V2_test(); 

@@ -70,7 +70,7 @@ static int epaper_probe(struct spi_device *spi) {
 
     epaper_pin_busy = of_get_named_gpio(epaper_device_node, "busy-pin", 0);
     pr_info("epaper_pin_busy is %d\r\n", epaper_pin_busy);
-    gpio_direction_output(epaper_pin_busy, 1);
+    gpio_direction_input(epaper_pin_busy, 1);
 
 	// spi config
     spi_epaper_dev = spi;
