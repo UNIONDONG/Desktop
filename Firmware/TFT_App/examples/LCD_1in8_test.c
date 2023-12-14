@@ -35,38 +35,64 @@ void LCD_1IN8_test(void)
 	Paint_NewImage(BlackImage, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, 0, WHITE, 16);
 	Paint_Clear(WHITE);
 	
-	/*2.Drawing on the image*/
-	printf("drawing...\r\n");
-	Paint_DrawPoint(2,2, BLACK, DOT_PIXEL_1X1,  DOT_FILL_RIGHTUP);//240 240
-	Paint_DrawPoint(2,6, BLACK, DOT_PIXEL_2X2,  DOT_FILL_RIGHTUP);
-	Paint_DrawPoint(2,11, BLACK, DOT_PIXEL_3X3, DOT_FILL_RIGHTUP);
-	Paint_DrawPoint(2,16, BLACK, DOT_PIXEL_4X4, DOT_FILL_RIGHTUP);
-	Paint_DrawPoint(2,21, BLACK, DOT_PIXEL_5X5, DOT_FILL_RIGHTUP);
-	Paint_DrawLine( 10,  5, 40, 35, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-	Paint_DrawLine( 10, 35, 40,  5, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
-
-	Paint_DrawLine( 80,  20, 110, 20, CYAN, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
-	Paint_DrawLine( 95,   5,  95, 35, CYAN, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
-
-	Paint_DrawRectangle(10, 5, 40, 35, RED, DOT_PIXEL_2X2,DRAW_FILL_EMPTY);
-	Paint_DrawRectangle(45, 5, 75, 35, BLUE, DOT_PIXEL_2X2,DRAW_FILL_FULL);
-
-	Paint_DrawCircle(95, 20, 15, GREEN, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-	Paint_DrawCircle(130, 20, 15, GREEN, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-
-	Paint_DrawFloatNum  (1, 37 ,987.654321,5,  &Font12,    0x000f,   0xfff0);
-	Paint_DrawString_EN(1, 50, "ABC", &Font20, 0xF000, 0x0FFF);
-	Paint_DrawString_CN(1,90, "微雪电子",  &Font24CN, WHITE, BLUE);
-	// /*3.Refresh the picture in RAM to LCD*/
-	LCD_1IN8_Display(BlackImage);
-	DEV_Delay_ms(2000);
-
+	// /*2.Drawing on the image*/
+	// printf("drawing...\r\n");
+	// Paint_DrawPoint(2,2, BLACK, DOT_PIXEL_1X1,  DOT_FILL_RIGHTUP);//240 240
+	// Paint_DrawPoint(2,6, BLACK, DOT_PIXEL_2X2,  DOT_FILL_RIGHTUP);
+	// Paint_DrawPoint(2,11, BLACK, DOT_PIXEL_3X3, DOT_FILL_RIGHTUP);
+	// Paint_DrawPoint(2,16, BLACK, DOT_PIXEL_4X4, DOT_FILL_RIGHTUP);
+	// Paint_DrawPoint(2,21, BLACK, DOT_PIXEL_5X5, DOT_FILL_RIGHTUP);
+	// Paint_DrawLine( 10,  5, 40, 35, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+	// Paint_DrawLine( 10, 35, 40,  5, MAGENTA, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+	//
+	// Paint_DrawLine( 80,  20, 110, 20, CYAN, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
+	// Paint_DrawLine( 95,   5,  95, 35, CYAN, DOT_PIXEL_1X1, LINE_STYLE_DOTTED);
+	//
+	// Paint_DrawRectangle(10, 5, 40, 35, RED, DOT_PIXEL_2X2,DRAW_FILL_EMPTY);
+	// Paint_DrawRectangle(45, 5, 75, 35, BLUE, DOT_PIXEL_2X2,DRAW_FILL_FULL);
+	//
+	// Paint_DrawCircle(95, 20, 15, GREEN, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+	// Paint_DrawCircle(130, 20, 15, GREEN, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+	//
+	// Paint_DrawFloatNum  (1, 37 ,987.654321,5,  &Font12,    0x000f,   0xfff0);
+	// Paint_DrawString_EN(1, 50, "ABC", &Font20, 0xF000, 0x0FFF);
+	// Paint_DrawString_CN(1,90, "微雪电子",  &Font24CN, WHITE, BLUE);
+	// // /*3.Refresh the picture in RAM to LCD*/
+	// LCD_1IN8_Display(BlackImage);
+	// DEV_Delay_ms(2000);
+	// Paint_Clear(BLACK);
     // /* show bmp */
+	// printf("show bmp\r\n");
+	// GUI_ReadBmp("./pic/LCD_1inch8.bmp");    
+ //    LCD_1IN8_Display(BlackImage);
+ //    DEV_Delay_ms(2000);
+
+    PAINT_TIME sPaint_time; //time struct
+    sPaint_time.Min = 24;
+    sPaint_time.Sec = 59;
+	while (1) {
+		sPaint_time.Sec--;
+		if (sPaint_time.Sec == 255) {
+			sPaint_time.Sec = 59;
+			sPaint_time.Min--;
+			if (sPaint_time.Min == 255) {
+				break;	
+			}
+		}
+        Paint_ClearWindow(5, 10, 120, 120, BLACK);
+        Paint_DrawTime(15, 20, &sPaint_time, &Font48, WHITE, YELLOW);
+        LCD_1IN8_Display(BlackImage);
+		DEV_Delay_ms(1000);
+	}
+
+	LCD_1IN8_Display(BlackImage);
 	printf("show bmp\r\n");
-	GUI_ReadBmp("./pic/LCD_1inch8.bmp");    
+	Paint_Clear(BLACK);
+	// Paint_DrawImage(gImage_image_girl, 0, 0, 160, 128);
+	GUI_ReadBmp("./pic/girl.bmp");
     LCD_1IN8_Display(BlackImage);
     DEV_Delay_ms(2000);
-	
+
     /* Module Exit */
     free(BlackImage);
     BlackImage = NULL;
