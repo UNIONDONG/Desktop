@@ -17,8 +17,12 @@
 #define __GUI_PAINT_H
 
 #include "Debug.h"
-#include "LCD_1in54.h"
 #include "../Fonts/fonts.h"
+
+#define UBYTE   uint8_t
+#define UWORD   uint16_t
+#define UDOUBLE uint32_t
+
 
 /**
  * Display orientation

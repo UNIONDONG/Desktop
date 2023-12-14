@@ -78,7 +78,8 @@ void DEV_HARDWARE_SPI_begin(char *SPI_device)
         DEV_HARDWARE_SPI_Debug("open : %s\r\n", SPI_device);
     }
     hardware_SPI.mode = 0;
-    
+   
+	// set read write bits width
     ret = ioctl(hardware_SPI.fd, SPI_IOC_WR_BITS_PER_WORD, &bits);
     if (ret == -1) {
         DEV_HARDWARE_SPI_Debug("can't set bits per word\r\n"); 

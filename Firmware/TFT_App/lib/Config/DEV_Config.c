@@ -185,9 +185,10 @@ UBYTE DEV_ModuleInit(void)
     pwmWrite(LCD_BL,512);
 #elif USE_DEV_LIB
     DEV_GPIO_Init();
-    DEV_HARDWARE_SPI_begin("/dev/spidev0.0");
+    DEV_HARDWARE_SPI_begin("/dev/spidev0.0"); 		//config spi controller
 	
 	#ifdef USE_DEV_LIB_PWM
+		// create phread control back light
 		pthread_attr_init(&attr);	
 		param.sched_priority = 98;
 		pthread_attr_setschedpolicy(&attr,SCHED_RR);
