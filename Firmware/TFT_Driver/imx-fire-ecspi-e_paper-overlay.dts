@@ -1,0 +1,51 @@
+/*
+ * Copyright (C) 2019 - All Rights Reserved by
+ * filename : imx-fire-e_paper-overlay.dts
+ * brief : Device Tree overlay for ecspi_e_paper device
+ * author : DonGe
+ * date :   2022-08-14
+ * version : A001
+ */
+#include "../imx6ul-pinfunc.h"
+
+/dts-v1/;
+/plugin/;
+
+/ {
+    fragment@0 {
+        target = <&ecspi1>;
+        __overlay__ {
+            fsl,spi-num-chipselects = <1>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_ecspi1>;
+			status = "okay";
+			#address-cells = <1>;
+			#size-cells = <0>;
+            ecspi_tft@0 {
+				name = "ecspi_tft";
+				compatible = "fire,ecspi_tft";
+				cs-pin = <&gpio4 26 0>;
+                dc-pin = <&gpio4 24 0>;
+                reset-pin = <&gpio4 21 0>;
+                backlight-pin = <&gpio3 17 0>;
+                spi-max-frequency = <20000000>;
+                reg = <0>;
+				status = "okay";
+            };
+        };
+    };
+
+    fragment@1 {
+        target = <&iomuxc>;
+        __overlay__ {
+            pinctrl_ecspi1: ecspi1grp {
+                fsl,pins = <
+                    MX6UL_PAD_CSI_DATA07__ECSPI1_MISO  0x10b0
+                    MX6UL_PAD_CSI_DATA06__ECSPI1_MOSI  0x10b0
+                    MX6UL_PAD_CSI_DATA04__ECSPI1_SCLK  0x10b0
+                    MX6UL_PAD_CSI_DATA03__GPIO4_IO24   0x10b0
+                >;
+            };
+        };
+    };
+};
