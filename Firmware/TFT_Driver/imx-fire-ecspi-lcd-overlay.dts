@@ -19,13 +19,13 @@
 			pinctrl-names = "default";
 			pinctrl-0 = <&pinctrl_ecspi1>;
 			status = "okay";
+			cs-gpios = <&gpio4 26 0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
-            ecspi_tft@0 {
-				name = "ecspi_tft";
-				compatible = "fire,ecspi_tft";
-				cs-pin = <&gpio4 26 0>;
-                dc-pin = <&gpio4 24 0>;
+            ecspi_lcd@0 {
+				name = "ecspi_lcd";
+				compatible = "fire,ecspi_lcd";
+				dc-pin = <&gpio4 24 0>;
                 reset-pin = <&gpio4 21 0>;
                 backlight-pin = <&gpio3 17 0>;
                 spi-max-frequency = <20000000>;

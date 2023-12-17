@@ -1,0 +1,3 @@
+/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles/desktop_focus.dir
+/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles/edit_cache.dir
+/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles/rebuild_cache.dir

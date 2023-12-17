@@ -1,0 +1,67 @@
+[
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/src/main.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/main.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/main.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/tft_lcd.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/tft_lcd.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font12.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font12.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font12CN.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font12CN.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font16.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font16.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font20.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font20.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font24.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font24.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font24CN.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font24CN.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font48.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font48.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font50.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font50.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font8.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font8.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_BMP.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_BMP.c"
+},
+{
+  "directory": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build",
+  "command": "/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc  -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./include -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/Fonts -I/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/./lib/GUI  -Os -s -pthread -o CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_Paint.c",
+  "file": "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_Paint.c"
+}
+]
