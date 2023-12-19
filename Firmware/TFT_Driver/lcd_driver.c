@@ -15,13 +15,33 @@
 #include "linux/gfp.h"
 #include "linux/slab.h"
 #include "linux/uaccess.h"
+
 #define DEV_NAME "ecspi_lcd"
 #define DEV_CNT (1)
 #define SCAN_DIR_DFT  U2D_R2L  	//Default scan direction = L2R_U2D
-int lcd_pin_dc;
-int lcd_pin_reset;
-int lcd_pin_backlight;
-int lcd_pin_cs;
+
+typedef struct {
+	uint8_t id;
+	dev_t dev_number;
+
+	struct cdev *lcd_cdev;
+	struct spi_device *lcd_spi_dev;
+	struct class *lcd_class;
+	struct device *lcd_dev;
+	struct device_node *lcd_dev_node;
+
+	/*lcd tft pin*/
+	int lcd_pin_dc;
+	int lcd_pin_reset;
+	int lcd_pin_backlight;
+	int lcd_pin_cs;
+	
+	int lcd_width;
+	int lcd_height;
+	
+} LCD_DEVICE;
+
+static struct LCD_DEVICE *lcd_tft;
 
 struct device_node *lcd_device_node;
 static dev_t spi_lcd_dev_number;
@@ -452,52 +472,88 @@ static struct file_operations lcd_char_dev_ops = {
 	.release = lcd_release
 };
 
+static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
+{
+	if (IS_ERR_OR_NULL(lcd_dev)) {
+		pr_err("lcd_dev is null!");
+		return -1;
+	}
+
+	// dts prase, in order to get pins
+	lcd_dev->lcd_dev_node = of_find_node_by_name(NULL, "ecspi_tft");
+    if(lcd_dev->lcd_device_node == NULL) {
+        pr_err("get lcd device node failed\r\n");
+		return -1;
+    }
+
+    lcd_dev->lcd_pin_dc = of_get_named_gpio(lcd_dev->lcd_device_node, "dc-pin", 0);
+	if (IS_ERR_VALUE(lcd_dev->lcd_pin_dc)) {
+		pr_info("get pin_dc error\r\n");
+		return -1;
+	} else {
+		pr_info("lcd_pin_dc is %d\r\n", lcd_dev->lcd_pin_dc);
+		gpio_direction_output(lcd_dev->lcd_pin_dc, 1);
+	}
+        
+    lcd_dev->lcd_pin_reset = of_get_named_gpio(lcd_dev->lcd_device_node, "reset-pin", 0);
+	if (IS_ERR_VALUE(lcd_dev->lcd_pin_reset)) {
+		pr_info("get pin_reset error\r\n");
+		return -1;
+	} else {
+		pr_info("lcd_pin_reset is %d\r\n", lcd_dev->lcd_pin_reset);
+		gpio_direction_output(lcd_dev->lcd_pin_reset, 1);
+	}
+
+    lcd_dev->lcd_pin_backlight = of_get_named_gpio(lcd_dev->lcd_device_node, "backlight-pin", 0);
+	if (IS_ERR_VALUE(lcd_dev->lcd_pin_backlight)) {
+		pr_info("get pin_backlight error\r\n");
+		return -1;
+	} else {
+		pr_info("lcd_pin_backlight is %d\r\n", lcd_dev->lcd_pin_backlight);
+		gpio_direction_output(lcd_dev->lcd_pin_backlight, 1);
+	}
+
+    lcd_dev->lcd_width = of_get_named_gpio(lcd_dev->lcd_device_node, "lcd-width", 0);
+	if (IS_ERR_VALUE(lcd_dev->lcd_width)) {
+		pr_info("get lcd width error\r\n");
+		return -1;
+	} else {
+		pr_info("lcd width is %d\r\n", lcd_dev->lcd_width);
+	}
+
+    lcd_dev->lcd_height = of_get_named_gpio(lcd_dev->lcd_height, "lcd-height", 0);
+	if (IS_ERR_VALUE(lcd_dev->lcd_height)) {
+		pr_info("get lcd_height error\r\n");
+		return -1;
+	} else {
+		pr_info("lcd_height is %d\r\n", lcd_dev->lcd_height);
+	}
+
+	return 0;
+}
+
 static int lcd_probe(struct spi_device *spi) {
     int ret = 0;
 
     pr_info("lcd driver probe\r\n");
-    lcd_device_node = of_find_node_by_name(NULL, "ecspi_lcd");
-    if(lcd_device_node == NULL) {
-        pr_err("get lcd device node failed\r\n");
-		goto alloc_err;
-    }
 
-	// dts prase, in order to get pins
-    lcd_pin_dc = of_get_named_gpio(lcd_device_node, "dc-pin", 0);
-	if (IS_ERR_VALUE(lcd_pin_dc)) {
-		pr_info("get pin_dc error\r\n");
+	lcd_tft = kzalloc(sizeof(struct LCD_DEVICE), GFP_KERNEL);
+	if (IS_ERR_OR_NULL(lcd_tft)) {
+		pr_err("%s : kzalloc error!");
+		ret = -ENOMEM;
 		goto alloc_err;
-	} else {
-		pr_info("lcd_pin_dc is %d\r\n", lcd_pin_dc);
-		gpio_direction_output(lcd_pin_dc, 1);
-	}
-        
-    lcd_pin_reset = of_get_named_gpio(lcd_device_node, "reset-pin", 0);
-	if (IS_ERR_VALUE(lcd_pin_reset)) {
-		pr_info("get pin_reset error\r\n");
-		goto alloc_err;
-	} else {
-		pr_info("lcd_pin_reset is %d\r\n", lcd_pin_reset);
-		gpio_direction_output(lcd_pin_reset, 1);
 	}
 
-    lcd_pin_backlight = of_get_named_gpio(lcd_device_node, "backlight-pin", 0);
-	if (IS_ERR_VALUE(lcd_pin_backlight)) {
-		pr_info("get pin_backlight error\r\n");
-		goto alloc_err;
-	} else {
-		pr_info("lcd_pin_backlight is %d\r\n", lcd_pin_backlight);
-		gpio_direction_output(lcd_pin_backlight, 1);
-	}
+	lcd_hardware_pin_reset(lcd_tft);
 
 	// spi config
-    spi_lcd_dev = spi;
-    spi_lcd_dev->mode = SPI_MODE_0;
-    spi_lcd_dev->max_speed_hz = 20000000;
-    spi_setup(spi_lcd_dev);
+	lcd_tft->spi_lcd_dev = spi;
+	lcd_tft->spi_lcd_dev->mode = SPI_MODE_0;
+	lcd_tft->spi_lcd_dev->max_speed_hz = 20000000;
+    spi_setup(lcd_tft->spi_lcd_dev);
 	
 	// char dev create
-    ret = alloc_chrdev_region(&spi_lcd_dev_number, 0, DEV_CNT, DEV_NAME);
+    ret = alloc_chrdev_region(&lcd_tft->spi_lcd_dev_number, 0, DEV_CNT, DEV_NAME);
     if(ret < 0) {
         pr_err("alloc lcd device number failed\r\n");
         goto alloc_err;
