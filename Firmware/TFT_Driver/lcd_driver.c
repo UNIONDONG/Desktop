@@ -24,10 +24,10 @@ typedef struct {
 	uint8_t id;
 	dev_t dev_number;
 
-	struct cdev *lcd_cdev;
+	struct cdev lcd_cdev;
 	struct spi_device *lcd_spi_dev;
 	struct class *lcd_class;
-	struct device *lcd_dev;
+	struct device *lcd_device;
 	struct device_node *lcd_dev_node;
 
 	/* lcd tft pin */
@@ -67,14 +67,14 @@ static void tft_reset(LCD_DEVICE *tft_dev)
 
 static void tft_write_command(LCD_DEVICE *tft_dev, uint8_t command)
 {
-	int ret = 0;
 	struct spi_message msg;
 	struct spi_transfer *trans;
 	uint8_t txdata = command;
+
 	trans = kzalloc(sizeof(struct spi_transfer), GFP_KERNEL);
 	if (IS_ERR_OR_NULL(trans)) {
 		pr_err("alloc spi transfer failed.\r\n");
-		return -EINVAL;
+		return;
 	}
 
 	LCD_PIN_SET_LOW(tft_dev->lcd_pin_dc);
@@ -84,22 +84,20 @@ static void tft_write_command(LCD_DEVICE *tft_dev, uint8_t command)
 	
 	spi_message_init(&msg);
 	spi_message_add_tail(trans, &msg);
-	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
+	spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	kfree(trans);
-	return ret;
 }
 
 static void tft_write_data(LCD_DEVICE *tft_dev, uint8_t data)
 {
-	int ret = 0;
 	struct spi_message msg;
 	struct spi_transfer *trans;
 	uint8_t txdata = data;
 	trans = kzalloc(sizeof(struct spi_transfer), GFP_KERNEL);
 	if (IS_ERR_OR_NULL(trans)) {
 		pr_err("alloc spi transfer failed.\r\n");
-		return -EINVAL;
+		return;
 	}
 
 	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
@@ -110,22 +108,21 @@ static void tft_write_data(LCD_DEVICE *tft_dev, uint8_t data)
 	
 	spi_message_init(&msg);
 	spi_message_add_tail(trans, &msg);
-	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
+	spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	kfree(trans);
-	return ret;
 }
 
 static void tft_write_data_16bit(LCD_DEVICE *tft_dev, uint16_t data)
 {
-	int ret = 0;
 	struct spi_message msg;
 	struct spi_transfer *trans;
 	uint8_t txdata = data >> 8;
+
 	trans = kzalloc(sizeof(struct spi_transfer), GFP_KERNEL);
 	if (IS_ERR_OR_NULL(trans)) {
 		pr_err("alloc spi transfer failed.\r\n");
-		return -EINVAL;
+		return;
 	}
 
 	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
@@ -136,14 +133,13 @@ static void tft_write_data_16bit(LCD_DEVICE *tft_dev, uint16_t data)
 	
 	spi_message_init(&msg);
 	spi_message_add_tail(trans, &msg);
-	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
+	spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	txdata = data & 0xFF;
 	trans->tx_buf = &txdata;
-	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
+	spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	kfree(trans);
-	return ret;
 }
 
 static void tft_init_reg(LCD_DEVICE *tft_dev)
@@ -247,6 +243,8 @@ parameter:
 ********************************************************************************/
 void tft_set_gram_scanway(LCD_DEVICE *tft_dev, LCD_SCAN_DIR Scan_dir)
 {
+	uint16_t MemoryAccessReg_Data = 0;  //0x36
+
     //Get the screen scan direction
 	LCD_DIS *lcd_dis = &tft_dev->lcd_dis;
 
@@ -266,7 +264,6 @@ void tft_set_gram_scanway(LCD_DEVICE *tft_dev, LCD_SCAN_DIR Scan_dir)
 	}
 
     // Gets the scan direction of GRAM
-    uint16_t MemoryAccessReg_Data = 0;  //0x36
     switch (Scan_dir) {
     case L2R_U2D:
         MemoryAccessReg_Data = 0X00 | 0x00;//x Scan direction | y Scan direction
@@ -301,6 +298,7 @@ void tft_set_gram_scanway(LCD_DEVICE *tft_dev, LCD_SCAN_DIR Scan_dir)
 
 static void tft_init(LCD_DEVICE *tft_dev)
 {
+	pr_info("lcd backlight pin: %d\r\n", tft_dev->lcd_pin_backlight);
 	// backlight setting
 	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_backlight);
 
@@ -439,13 +437,14 @@ static void lcd_clean(LCD_DEVICE *tft_dev, uint16_t Color)
 static int tft_open(struct inode *inode, struct file *file)
 {
 	struct cdev *tft_cdev = inode->i_cdev;
-	LCD_DEVICE *tft_dev = container_of(tft_cdev, LCD_DEVICE, cdev);
-	
+	LCD_DEVICE *tft_dev = container_of(tft_cdev, LCD_DEVICE, lcd_cdev);
+	// LCD_DEVICE *tft_dev = lcd_tft;
 	file->private_data = tft_dev;
-	
+
+	pr_info("origin addr: 0x%x , current addr : 0x%x\r\n", 0, tft_dev->lcd_spi_dev);
 	pr_info("lcd init ......");
-	tft_init(tft_dev);
-	lcd_clean(tft_dev, BLACK);
+	// tft_init(tft_dev);
+	// lcd_clean(tft_dev, BLACK);
 	return 0;
 }
 
@@ -470,9 +469,9 @@ static int tft_write(struct file *filp, const char __user *buf, size_t cnt, loff
 static int tft_release(struct inode *inode, struct file *filp)
 {
 	LCD_DEVICE *tft_dev = filp->private_data;
-
+	pr_info("origin addr: 0x%x , current addr : 0x%x\r\n", lcd_tft, tft_dev);
 	pr_info("exit\r\n");
-	lcd_clean(tft_dev, WHITE);
+	// lcd_clean(tft_dev, WHITE);
 	return 0;
 }
 
@@ -545,22 +544,25 @@ static int lcd_hardware_reset(LCD_DEVICE *lcd_dev)
 	return 0;
 }
 
-static int lcd_probe(struct spi_device *spi) {
+static int lcd_probe(struct spi_device *spi)
+{
     int ret = 0;
-	LCD_DEVICE *lcd_dev = lcd_tft;
-
+	LCD_DEVICE *lcd_dev;
     pr_info("lcd driver probe\r\n");
 	lcd_dev = kzalloc(sizeof(LCD_DEVICE), GFP_KERNEL);
 	if (IS_ERR_OR_NULL(lcd_dev)) {
-		pr_err("%s : kzalloc error!");
+		pr_err("kzalloc error!\r\n");
 		ret = -ENOMEM;
 		goto alloc_err;
 	}
+	lcd_tft = lcd_dev;
 
 	lcd_hardware_reset(lcd_dev);
 
 	// spi config
 	lcd_dev->lcd_spi_dev = spi;
+	pr_info("origin addr: 0x%x , current addr : 0x%x\r\n", spi, lcd_dev->lcd_spi_dev);
+
 	lcd_dev->lcd_spi_dev->mode = SPI_MODE_0;
 	lcd_dev->lcd_spi_dev->max_speed_hz = 20000000;
     spi_setup(lcd_dev->lcd_spi_dev);
@@ -572,6 +574,7 @@ static int lcd_probe(struct spi_device *spi) {
         goto alloc_err;
     }
 	pr_info("lcd_device_number: %x\r\n", lcd_dev->dev_number);
+	// lcd_dev->lcd_cdev = cdev_alloc();
     lcd_dev->lcd_cdev.owner = THIS_MODULE;
     cdev_init(&lcd_dev->lcd_cdev, &tft_char_dev_ops);
     ret = cdev_add(&lcd_dev->lcd_cdev, lcd_dev->dev_number, DEV_CNT);
@@ -599,12 +602,16 @@ alloc_err:
 }
 
 static int lcd_remove(struct spi_device *spi) {
+
+	LCD_DEVICE *lcd_dev = container_of(&spi, LCD_DEVICE, lcd_spi_dev);
+
+	pr_info("origin addr: 0x%x , current addr : 0x%x\r\n", spi, lcd_dev->lcd_spi_dev);
 	pr_info("lcd driver remove");
-	LCD_DEVICE * lcd_dev = container_of(spi, LCD_DEVICE, spi_device);
 	device_destroy(lcd_dev->lcd_class, lcd_dev->dev_number);
 	class_destroy(lcd_dev->lcd_class);
 	cdev_del(&lcd_dev->lcd_cdev);
 	unregister_chrdev_region(lcd_dev->dev_number, DEV_CNT);
+	return 0;
 }
 
 static const struct of_device_id lcd_of_match_table[] = {

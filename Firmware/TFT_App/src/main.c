@@ -20,15 +20,15 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	Welcome_Show(fd);
-	sleep(3);
-	Desktop_Focus(fd);
+	// Welcome_Show(fd);
+	// sleep(3);
+	// Desktop_Focus(fd);
 
-	while (1) {
-
-		sleep(10);
-	
-	}
+	// while (1) {
+	//
+	 	sleep(10);
+	// 
+	// }
 
 	ret = close(fd);
 	if (ret < 0) {
