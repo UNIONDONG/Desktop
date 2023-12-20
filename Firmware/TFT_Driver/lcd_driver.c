@@ -30,50 +30,42 @@ typedef struct {
 	struct device *lcd_dev;
 	struct device_node *lcd_dev_node;
 
-	/*lcd tft pin*/
+	/* lcd tft pin */
 	int lcd_pin_dc;
 	int lcd_pin_reset;
 	int lcd_pin_backlight;
 	int lcd_pin_cs;
 	
+	/* lcd property*/
 	int lcd_width;
 	int lcd_height;
+	LCD_DIS lcd_dis;
 	
 } LCD_DEVICE;
 
-static struct LCD_DEVICE *lcd_tft;
+static LCD_DEVICE *lcd_tft;
 
-struct device_node *lcd_device_node;
-static dev_t spi_lcd_dev_number;
-static struct cdev lcd_char_dev;
-struct spi_device *spi_lcd_dev = NULL;
-struct class *lcd_class = NULL;
-struct device *lcd_device = NULL;
-
-LCD_DIS sLCD_DIS;
 #define LCD_WIDTH  160  //LCD width
 #define LCD_HEIGHT  128 //LCD height
 #define LCD_X	 2
 #define LCD_Y	 1
 
-#define LCD_BL_0 gpio_direction_output(lcd_pin_backlight, 0)
-#define LCD_BL_1 gpio_direction_output(lcd_pin_backlight, 1)
-#define LCD_RST_0 gpio_direction_output(lcd_pin_reset, 0)
-#define LCD_RST_1 gpio_direction_output(lcd_pin_reset, 1)
-#define LCD_DC_O gpio_direction_output(lcd_pin_dc, 0)
-#define LCD_DC_1 gpio_direction_output(lcd_pin_dc, 1)
+#define LCD_PIN_SET_HIGH(pin) \
+	gpio_direction_output(pin, 1)
+#define LCD_PIN_SET_LOW(pin) \
+	gpio_direction_output(pin, 0)
 
-static void lcd_reset(void)
+static void tft_reset(LCD_DEVICE *tft_dev)
 {
-	LCD_RST_1;
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_reset);
 	mdelay(100);
-	LCD_RST_0;
+	LCD_PIN_SET_LOW(tft_dev->lcd_pin_reset);
 	mdelay(100);
-	LCD_RST_1;
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_reset);
 	mdelay(100);
 }
 
-static void lcd_write_command(uint8_t command)
+static void tft_write_command(LCD_DEVICE *tft_dev, uint8_t command)
 {
 	int ret = 0;
 	struct spi_message msg;
@@ -85,19 +77,20 @@ static void lcd_write_command(uint8_t command)
 		return -EINVAL;
 	}
 
-	LCD_DC_O;
+	LCD_PIN_SET_LOW(tft_dev->lcd_pin_dc);
 	trans->tx_buf = &txdata;
 	trans->len = 1;
 	trans->bits_per_word = 8;
 	
 	spi_message_init(&msg);
 	spi_message_add_tail(trans, &msg);
-	ret = spi_sync(spi_lcd_dev, &msg);
+	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	kfree(trans);
 	return ret;
 }
-static void lcd_write_data(uint8_t data)
+
+static void tft_write_data(LCD_DEVICE *tft_dev, uint8_t data)
 {
 	int ret = 0;
 	struct spi_message msg;
@@ -109,21 +102,21 @@ static void lcd_write_data(uint8_t data)
 		return -EINVAL;
 	}
 
-	LCD_DC_1;
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
+
 	trans->tx_buf = &txdata;
 	trans->len = 1;
 	trans->bits_per_word = 8;
 	
 	spi_message_init(&msg);
 	spi_message_add_tail(trans, &msg);
-	ret = spi_sync(spi_lcd_dev, &msg);
+	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	kfree(trans);
 	return ret;
-
 }
 
-static void lcd_write_data_16bit(uint16_t data)
+static void tft_write_data_16bit(LCD_DEVICE *tft_dev, uint16_t data)
 {
 	int ret = 0;
 	struct spi_message msg;
@@ -135,115 +128,115 @@ static void lcd_write_data_16bit(uint16_t data)
 		return -EINVAL;
 	}
 
-	LCD_DC_1;
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
+
 	trans->tx_buf = &txdata;
 	trans->len = 1;
 	trans->bits_per_word = 8;
 	
 	spi_message_init(&msg);
 	spi_message_add_tail(trans, &msg);
-	ret = spi_sync(spi_lcd_dev, &msg);
+	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	txdata = data & 0xFF;
 	trans->tx_buf = &txdata;
-	ret = spi_sync(spi_lcd_dev, &msg);
+	ret = spi_sync(tft_dev->lcd_spi_dev, &msg);
 	
 	kfree(trans);
 	return ret;
-
 }
 
-static void lcd_init_reg(void)
+static void tft_init_reg(LCD_DEVICE *tft_dev)
 {
     //ST7735R Frame Rate
-    lcd_write_command(0xB1);
-    lcd_write_data(0x01);
-    lcd_write_data(0x2C);
-    lcd_write_data(0x2D);
+    tft_write_command(tft_dev, 0xB1);
+    tft_write_data(tft_dev, 0x01);
+    tft_write_data(tft_dev, 0x2C);
+    tft_write_data(tft_dev, 0x2D);
 
-    lcd_write_command(0xB2);
-    lcd_write_data(0x01);
-    lcd_write_data(0x2C);
-    lcd_write_data(0x2D);
+    tft_write_command(tft_dev, 0xB2);
+    tft_write_data(tft_dev, 0x01);
+    tft_write_data(tft_dev, 0x2C);
+    tft_write_data(tft_dev, 0x2D);
 
-    lcd_write_command(0xB3);
-    lcd_write_data(0x01);
-    lcd_write_data(0x2C);
-    lcd_write_data(0x2D);
-    lcd_write_data(0x01);
-    lcd_write_data(0x2C);
-    lcd_write_data(0x2D);
+    tft_write_command(tft_dev, 0xB3);
+    tft_write_data(tft_dev, 0x01);
+    tft_write_data(tft_dev, 0x2C);
+    tft_write_data(tft_dev, 0x2D);
+    tft_write_data(tft_dev, 0x01);
+    tft_write_data(tft_dev, 0x2C);
+    tft_write_data(tft_dev, 0x2D);
 
-    lcd_write_command(0xB4); //Column inversion
-    lcd_write_data(0x07);
+    tft_write_command(tft_dev, 0xB4); //Column inversion
+    tft_write_data(tft_dev, 0x07);
 
     //ST7735R Power Sequence
-    lcd_write_command(0xC0);
-    lcd_write_data(0xA2);
-    lcd_write_data(0x02);
-    lcd_write_data(0x84);
-    lcd_write_command(0xC1);
-    lcd_write_data(0xC5);
+    tft_write_command(tft_dev, 0xC0);
+    tft_write_data(tft_dev, 0xA2);
+    tft_write_data(tft_dev, 0x02);
+    tft_write_data(tft_dev, 0x84);
+    tft_write_command(tft_dev, 0xC1);
+    tft_write_data(tft_dev, 0xC5);
 
-    lcd_write_command(0xC2);
-    lcd_write_data(0x0A);
-    lcd_write_data(0x00);
+    tft_write_command(tft_dev, 0xC2);
+    tft_write_data(tft_dev, 0x0A);
+    tft_write_data(tft_dev, 0x00);
 
-    lcd_write_command(0xC3);
-    lcd_write_data(0x8A);
-    lcd_write_data(0x2A);
-    lcd_write_command(0xC4);
-    lcd_write_data(0x8A);
-    lcd_write_data(0xEE);
+    tft_write_command(tft_dev, 0xC3);
+    tft_write_data(tft_dev, 0x8A);
+    tft_write_data(tft_dev, 0x2A);
+    tft_write_command(tft_dev, 0xC4);
+    tft_write_data(tft_dev, 0x8A);
+    tft_write_data(tft_dev, 0xEE);
 
-    lcd_write_command(0xC5); //VCOM
-    lcd_write_data(0x0E);
+    tft_write_command(tft_dev, 0xC5); //VCOM
+    tft_write_data(tft_dev, 0x0E);
 
     //ST7735R Gamma Sequence
-    lcd_write_command(0xe0);
-    lcd_write_data(0x0f);
-    lcd_write_data(0x1a);
-    lcd_write_data(0x0f);
-    lcd_write_data(0x18);
-    lcd_write_data(0x2f);
-    lcd_write_data(0x28);
-    lcd_write_data(0x20);
-    lcd_write_data(0x22);
-    lcd_write_data(0x1f);
-    lcd_write_data(0x1b);
-    lcd_write_data(0x23);
-    lcd_write_data(0x37);
-    lcd_write_data(0x00);
-    lcd_write_data(0x07);
-    lcd_write_data(0x02);
-    lcd_write_data(0x10);
+    tft_write_command(tft_dev, 0xe0);
+    tft_write_data(tft_dev, 0x0f);
+    tft_write_data(tft_dev, 0x1a);
+    tft_write_data(tft_dev, 0x0f);
+    tft_write_data(tft_dev, 0x18);
+    tft_write_data(tft_dev, 0x2f);
+    tft_write_data(tft_dev, 0x28);
+    tft_write_data(tft_dev, 0x20);
+    tft_write_data(tft_dev, 0x22);
+    tft_write_data(tft_dev, 0x1f);
+    tft_write_data(tft_dev, 0x1b);
+    tft_write_data(tft_dev, 0x23);
+    tft_write_data(tft_dev, 0x37);
+    tft_write_data(tft_dev, 0x00);
+    tft_write_data(tft_dev, 0x07);
+    tft_write_data(tft_dev, 0x02);
+    tft_write_data(tft_dev, 0x10);
 
-    lcd_write_command(0xe1);
-    lcd_write_data(0x0f);
-    lcd_write_data(0x1b);
-    lcd_write_data(0x0f);
-    lcd_write_data(0x17);
-    lcd_write_data(0x33);
-    lcd_write_data(0x2c);
-    lcd_write_data(0x29);
-    lcd_write_data(0x2e);
-    lcd_write_data(0x30);
-    lcd_write_data(0x30);
-    lcd_write_data(0x39);
-    lcd_write_data(0x3f);
-    lcd_write_data(0x00);
-    lcd_write_data(0x07);
-    lcd_write_data(0x03);
-    lcd_write_data(0x10);
+    tft_write_command(tft_dev, 0xe1);
+    tft_write_data(tft_dev, 0x0f);
+    tft_write_data(tft_dev, 0x1b);
+    tft_write_data(tft_dev, 0x0f);
+    tft_write_data(tft_dev, 0x17);
+    tft_write_data(tft_dev, 0x33);
+    tft_write_data(tft_dev, 0x2c);
+    tft_write_data(tft_dev, 0x29);
+    tft_write_data(tft_dev, 0x2e);
+    tft_write_data(tft_dev, 0x30);
+    tft_write_data(tft_dev, 0x30);
+    tft_write_data(tft_dev, 0x39);
+    tft_write_data(tft_dev, 0x3f);
+    tft_write_data(tft_dev, 0x00);
+    tft_write_data(tft_dev, 0x07);
+    tft_write_data(tft_dev, 0x03);
+    tft_write_data(tft_dev, 0x10);
 
-    lcd_write_command(0xF0); //Enable test command
-    lcd_write_data(0x01);
+    tft_write_command(tft_dev, 0xF0); //Enable test command
+    tft_write_data(tft_dev, 0x01);
 
-    lcd_write_command(0xF6); //Disable ram power save mode
-    lcd_write_data(0x00);
+    tft_write_command(tft_dev, 0xF6); //Disable ram power save mode
+    tft_write_data(tft_dev, 0x00);
 
-    lcd_write_command(0x3A); //65k mode
-    lcd_write_data(0x05);
+    tft_write_command(tft_dev, 0x3A); //65k mode
+    tft_write_data(tft_dev, 0x05);
 }
 
 /********************************************************************************
@@ -252,26 +245,28 @@ parameter:
 		Scan_dir   :   Scan direction
 		Colorchose :   RGB or GBR color format
 ********************************************************************************/
-void lcd_set_gram_scanway(LCD_SCAN_DIR Scan_dir)
+void tft_set_gram_scanway(LCD_DEVICE *tft_dev, LCD_SCAN_DIR Scan_dir)
 {
     //Get the screen scan direction
-    sLCD_DIS.LCD_Scan_Dir = Scan_dir;
+	LCD_DIS *lcd_dis = &tft_dev->lcd_dis;
+
+	lcd_dis->LCD_Scan_Dir = Scan_dir;
 
 	//Get GRAM and LCD width and height
 	if(Scan_dir == L2R_U2D || Scan_dir == L2R_D2U || Scan_dir == R2L_U2D || Scan_dir == R2L_D2U){
-		sLCD_DIS.LCD_Dis_Column	= LCD_HEIGHT ;
-		sLCD_DIS.LCD_Dis_Page = LCD_WIDTH ;		
-		sLCD_DIS.LCD_X_Adjust = LCD_X;
-		sLCD_DIS.LCD_Y_Adjust = LCD_Y;
+		lcd_dis->LCD_Dis_Column	= LCD_HEIGHT ;
+		lcd_dis->LCD_Dis_Page = LCD_WIDTH ;		
+		lcd_dis->LCD_X_Adjust = LCD_X;
+		lcd_dis->LCD_Y_Adjust = LCD_Y;
 	}else{
-		sLCD_DIS.LCD_Dis_Column	= LCD_WIDTH ;
-		sLCD_DIS.LCD_Dis_Page = LCD_HEIGHT ;	
-		sLCD_DIS.LCD_X_Adjust = LCD_Y;
-		sLCD_DIS.LCD_Y_Adjust = LCD_X;
+		lcd_dis->LCD_Dis_Column	= LCD_WIDTH ;
+		lcd_dis->LCD_Dis_Page = LCD_HEIGHT ;	
+		lcd_dis->LCD_X_Adjust = LCD_Y;
+		lcd_dis->LCD_Y_Adjust = LCD_X;
 	}
 
     // Gets the scan direction of GRAM
-    uint16_t MemoryAccessReg_Data=0;  //0x36
+    uint16_t MemoryAccessReg_Data = 0;  //0x36
     switch (Scan_dir) {
     case L2R_U2D:
         MemoryAccessReg_Data = 0X00 | 0x00;//x Scan direction | y Scan direction
@@ -300,20 +295,22 @@ void lcd_set_gram_scanway(LCD_SCAN_DIR Scan_dir)
     }
 
     // Set the read / write scan direction of the frame memory
-    lcd_write_command(0x36); //MX, MY, RGB mode
-    lcd_write_data( MemoryAccessReg_Data & 0xf7);	//RGB color filter panel
+    tft_write_command(tft_dev, 0x36); //MX, MY, RGB mode
+    tft_write_data(tft_dev, MemoryAccessReg_Data & 0xf7);	//RGB color filter panel
 }
 
-static void lcd_init(void)
+static void tft_init(LCD_DEVICE *tft_dev)
 {
-	LCD_BL_1;
-	lcd_reset();
-	lcd_init_reg();
-	lcd_set_gram_scanway(SCAN_DIR_DFT);
+	// backlight setting
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_backlight);
+
+	tft_reset(tft_dev);
+	tft_init_reg(tft_dev);
+	tft_set_gram_scanway(tft_dev, SCAN_DIR_DFT);
 	mdelay(200);
-	lcd_write_command(0x11);
+	tft_write_command(tft_dev, 0x11);
 	mdelay(120);
-	lcd_write_command(0x29);
+	tft_write_command(tft_dev, 0x29);
 }
 
 /********************************************************************************
@@ -324,127 +321,138 @@ parameter:
 		Xend    :   X direction end coordinates
 		Yend    :   Y direction end coordinates
 ********************************************************************************/
-void lcd_setwindows( uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend )
+void lcd_setwindows(LCD_DEVICE *tft_dev, uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend )
 {
 
     //set the X coordinates
-    lcd_write_command(0x2A);
-    lcd_write_data(0x00);						//Set the horizontal starting point to the high octet
-    lcd_write_data((Xstart & 0xff) + sLCD_DIS.LCD_X_Adjust);			//Set the horizontal starting point to the low octet
-    lcd_write_data(0x00 );				//Set the horizontal end to the high octet
-    lcd_write_data ((( Xend ) & 0xff) + sLCD_DIS.LCD_X_Adjust);	//Set the horizontal end to the low octet
+    tft_write_command(tft_dev, 0x2A);
+    tft_write_data(tft_dev, 0x00);						//Set the horizontal starting point to the high octet
+    tft_write_data(tft_dev, (Xstart & 0xff) + tft_dev->lcd_dis.LCD_X_Adjust);			//Set the horizontal starting point to the low octet
+    tft_write_data(tft_dev, 0x00 );				//Set the horizontal end to the high octet
+    tft_write_data (tft_dev, (( Xend ) & 0xff) + tft_dev->lcd_dis.LCD_X_Adjust);	//Set the horizontal end to the low octet
 
     //set the Y coordinates
-    lcd_write_command(0x2B);
-    lcd_write_data(0x00);
-    lcd_write_data((Ystart & 0xff) + sLCD_DIS.LCD_Y_Adjust);
-    lcd_write_data(0x00 );
-    lcd_write_data(((Yend) & 0xff)+ sLCD_DIS.LCD_Y_Adjust);
+    tft_write_command(tft_dev, 0x2B);
+    tft_write_data(tft_dev, 0x00);
+    tft_write_data(tft_dev, (Ystart & 0xff) + tft_dev->lcd_dis.LCD_Y_Adjust);
+    tft_write_data(tft_dev, 0x00 );
+    tft_write_data(tft_dev, ((Yend) & 0xff)+ tft_dev->lcd_dis.LCD_Y_Adjust);
 
-    lcd_write_command(0x2C);
+    tft_write_command(tft_dev, 0x2C);
 
 }
 
-static void lcd_clean(uint16_t Color)
+static void lcd_clean(LCD_DEVICE *tft_dev, uint16_t Color)
 {
     uint16_t j, i;
-    uint16_t Image[LCD_HEIGHT * LCD_WIDTH];
+	uint16_t height = tft_dev->lcd_height;
+	uint16_t width = tft_dev->lcd_width;
+
+    uint16_t Image[height * width];
     
-    Color = ((Color<<8)&0xff00)|(Color>>8);
+    Color = ((Color<<8)&0xff00) | (Color>>8);
    
-    for (j = 0; j < LCD_HEIGHT*LCD_WIDTH; j++) {
+    for (j = 0; j < height * width; ++j) {
         Image[j] = Color;
     }
     
-    lcd_setwindows(0, 0, LCD_WIDTH,LCD_HEIGHT);
-    LCD_DC_1;
+    lcd_setwindows(tft_dev, 0, 0, width, height);
+
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
+
     for(i = 0; i < LCD_HEIGHT; i++)
     {
         for(j = 0; j < LCD_WIDTH;j++)
         {
-            lcd_write_data_16bit(Color);
+            tft_write_data_16bit(tft_dev, Color);
         }
     }
 }
 
-void LCD_Disp_Pic(void)
+// void LCD_Disp_Pic(void)
+// {
+//     // struct lcd_spi_dev *dev = &lcd_dev;
+//     int i,j;
+//     static char pic[128];
+//
+//     for(i=0; i<128; i++)
+//     {
+//         pic[i] = 0xf8;
+//     }
+//
+//     /* 设置屏幕和显示部分 */
+//     lcd_setwindows(0, 0, 159, 127);
+//     for(i=0; i<128; i++)
+//     {
+//         for(j=0; j<160;j++)
+//         {
+//             tft_write_data_16bit(GRAY2);
+//         }
+//     }
+//
+//
+//
+//
+//     lcd_setwindows(0, 0, 79, 63);
+//     for(i=0; i<79; i++)
+//     {
+//         for(j=0; j<63;j++)
+//         {
+//             tft_write_data_16bit(WHITE);
+//         }
+//     }
+//
+//     lcd_setwindows(0, 63, 79, 127);
+//     for(i=0; i<79; i++)
+//     {
+//         for(j=0; j<63;j++)
+//         {
+//             tft_write_data_16bit(RED);
+//         }
+//     }
+//
+//     lcd_setwindows(79, 0, 159, 63);
+//     for(i=0; i<79; i++)
+//     {
+//         for(j=0; j<63;j++)
+//         {
+//             tft_write_data_16bit(GREEN);
+//         }
+//     }
+//
+//     lcd_setwindows(79, 63, 159, 127);
+//     for(i=0; i<79; i++)
+//     {
+//         for(j=0; j<63;j++)
+//         {
+//             tft_write_data_16bit(YELLOW);
+//         }
+//     }
+//
+//     mdelay(10);
+//
+//     printk(KERN_ALERT "LCD display picture ok!\r\n");
+// }
+
+
+
+static int tft_open(struct inode *inode, struct file *file)
 {
-    // struct spi_lcd_dev *dev = &lcd_dev;
-    int i,j;
-    static char pic[128];
-
-    for(i=0; i<128; i++)
-    {
-        pic[i] = 0xf8;
-    }
-
-    /* 设置屏幕和显示部分 */
-    lcd_setwindows(0, 0, 159, 127);
-    for(i=0; i<128; i++)
-    {
-        for(j=0; j<160;j++)
-        {
-            lcd_write_data_16bit(GRAY2);
-        }
-    }
-
-
-
-
-    lcd_setwindows(0, 0, 79, 63);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            lcd_write_data_16bit(WHITE);
-        }
-    }
-
-    lcd_setwindows(0, 63, 79, 127);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            lcd_write_data_16bit(RED);
-        }
-    }
-
-    lcd_setwindows(79, 0, 159, 63);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            lcd_write_data_16bit(GREEN);
-        }
-    }
-
-    lcd_setwindows(79, 63, 159, 127);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            lcd_write_data_16bit(YELLOW);
-        }
-    }
-
-    mdelay(10);
-
-    printk(KERN_ALERT "LCD display picture ok!\r\n");
-}
-
-
-
-static int lcd_open(struct inode *inode, struct file *file)
-{
+	struct cdev *tft_cdev = inode->i_cdev;
+	LCD_DEVICE *tft_dev = container_of(tft_cdev, LCD_DEVICE, cdev);
+	
+	file->private_data = tft_dev;
+	
 	pr_info("lcd init ......");
-	lcd_init();
-	lcd_clean(BLACK);
+	tft_init(tft_dev);
+	lcd_clean(tft_dev, BLACK);
 	return 0;
 }
 
-static int lcd_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *off)
+static int tft_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *off)
 {
 	int num = 0, i = 0;
+	LCD_DEVICE *tft_dev = filp->private_data;
 
 	uint16_t *Image;
 	Image = (uint16_t *)kzalloc(cnt, GFP_KERNEL);
@@ -452,28 +460,33 @@ static int lcd_write(struct file *filp, const char __user *buf, size_t cnt, loff
 	pr_info("write ......\r\n");
     for(i = 0; i < cnt / 2; i++)
     {
-        lcd_write_data_16bit(Image[i]);
+        tft_write_data_16bit(tft_dev, Image[i]);
     }
 
 	kfree(Image);
 	return 0;
 }
 
-static int lcd_release(struct inode *inode, struct file *filp) {
+static int tft_release(struct inode *inode, struct file *filp)
+{
+	LCD_DEVICE *tft_dev = filp->private_data;
+
 	pr_info("exit\r\n");
-	lcd_clean(WHITE);
+	lcd_clean(tft_dev, WHITE);
 	return 0;
 }
 
-static struct file_operations lcd_char_dev_ops = {
+static struct file_operations tft_char_dev_ops = {
 	.owner = THIS_MODULE,
-	.open = lcd_open,
-	.write = lcd_write,
-	.release = lcd_release
+	.open = tft_open,
+	.write = tft_write,
+	.release = tft_release
 };
 
-static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
+static int lcd_hardware_reset(LCD_DEVICE *lcd_dev)
 {
+	int ret = 0;
+
 	if (IS_ERR_OR_NULL(lcd_dev)) {
 		pr_err("lcd_dev is null!");
 		return -1;
@@ -481,12 +494,12 @@ static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
 
 	// dts prase, in order to get pins
 	lcd_dev->lcd_dev_node = of_find_node_by_name(NULL, "ecspi_tft");
-    if(lcd_dev->lcd_device_node == NULL) {
+    if(lcd_dev->lcd_dev_node == NULL) {
         pr_err("get lcd device node failed\r\n");
 		return -1;
     }
 
-    lcd_dev->lcd_pin_dc = of_get_named_gpio(lcd_dev->lcd_device_node, "dc-pin", 0);
+    lcd_dev->lcd_pin_dc = of_get_named_gpio(lcd_dev->lcd_dev_node, "dc-pin", 0);
 	if (IS_ERR_VALUE(lcd_dev->lcd_pin_dc)) {
 		pr_info("get pin_dc error\r\n");
 		return -1;
@@ -495,7 +508,7 @@ static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
 		gpio_direction_output(lcd_dev->lcd_pin_dc, 1);
 	}
         
-    lcd_dev->lcd_pin_reset = of_get_named_gpio(lcd_dev->lcd_device_node, "reset-pin", 0);
+    lcd_dev->lcd_pin_reset = of_get_named_gpio(lcd_dev->lcd_dev_node, "reset-pin", 0);
 	if (IS_ERR_VALUE(lcd_dev->lcd_pin_reset)) {
 		pr_info("get pin_reset error\r\n");
 		return -1;
@@ -504,7 +517,7 @@ static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
 		gpio_direction_output(lcd_dev->lcd_pin_reset, 1);
 	}
 
-    lcd_dev->lcd_pin_backlight = of_get_named_gpio(lcd_dev->lcd_device_node, "backlight-pin", 0);
+    lcd_dev->lcd_pin_backlight = of_get_named_gpio(lcd_dev->lcd_dev_node, "backlight-pin", 0);
 	if (IS_ERR_VALUE(lcd_dev->lcd_pin_backlight)) {
 		pr_info("get pin_backlight error\r\n");
 		return -1;
@@ -513,16 +526,16 @@ static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
 		gpio_direction_output(lcd_dev->lcd_pin_backlight, 1);
 	}
 
-    lcd_dev->lcd_width = of_get_named_gpio(lcd_dev->lcd_device_node, "lcd-width", 0);
-	if (IS_ERR_VALUE(lcd_dev->lcd_width)) {
+    ret = of_property_read_u32_index(lcd_dev->lcd_dev_node, "lcd-width", 0, &lcd_dev->lcd_width);
+	if (ret < 0) {
 		pr_info("get lcd width error\r\n");
 		return -1;
 	} else {
 		pr_info("lcd width is %d\r\n", lcd_dev->lcd_width);
 	}
 
-    lcd_dev->lcd_height = of_get_named_gpio(lcd_dev->lcd_height, "lcd-height", 0);
-	if (IS_ERR_VALUE(lcd_dev->lcd_height)) {
+    ret = of_property_read_u32_index(lcd_dev->lcd_dev_node, "lcd-height", 0, &lcd_dev->lcd_height);
+	if (ret < 0) {
 		pr_info("get lcd_height error\r\n");
 		return -1;
 	} else {
@@ -534,52 +547,51 @@ static int lcd_hardware_reset(struct LCD_DEVICE *lcd_dev)
 
 static int lcd_probe(struct spi_device *spi) {
     int ret = 0;
+	LCD_DEVICE *lcd_dev = lcd_tft;
 
     pr_info("lcd driver probe\r\n");
-
-	lcd_tft = kzalloc(sizeof(struct LCD_DEVICE), GFP_KERNEL);
-	if (IS_ERR_OR_NULL(lcd_tft)) {
+	lcd_dev = kzalloc(sizeof(LCD_DEVICE), GFP_KERNEL);
+	if (IS_ERR_OR_NULL(lcd_dev)) {
 		pr_err("%s : kzalloc error!");
 		ret = -ENOMEM;
 		goto alloc_err;
 	}
 
-	lcd_hardware_pin_reset(lcd_tft);
+	lcd_hardware_reset(lcd_dev);
 
 	// spi config
-	lcd_tft->spi_lcd_dev = spi;
-	lcd_tft->spi_lcd_dev->mode = SPI_MODE_0;
-	lcd_tft->spi_lcd_dev->max_speed_hz = 20000000;
-    spi_setup(lcd_tft->spi_lcd_dev);
+	lcd_dev->lcd_spi_dev = spi;
+	lcd_dev->lcd_spi_dev->mode = SPI_MODE_0;
+	lcd_dev->lcd_spi_dev->max_speed_hz = 20000000;
+    spi_setup(lcd_dev->lcd_spi_dev);
 	
 	// char dev create
-    ret = alloc_chrdev_region(&lcd_tft->spi_lcd_dev_number, 0, DEV_CNT, DEV_NAME);
+    ret = alloc_chrdev_region(&lcd_dev->dev_number, 0, DEV_CNT, DEV_NAME);
     if(ret < 0) {
         pr_err("alloc lcd device number failed\r\n");
         goto alloc_err;
     }
-	pr_info("lcd_device_number: %x\r\n", spi_lcd_dev_number);
-    lcd_char_dev.owner = THIS_MODULE;
-    cdev_init(&lcd_char_dev, &lcd_char_dev_ops);
-    ret = cdev_add(&lcd_char_dev, spi_lcd_dev_number, DEV_CNT);
+	pr_info("lcd_device_number: %x\r\n", lcd_dev->dev_number);
+    lcd_dev->lcd_cdev.owner = THIS_MODULE;
+    cdev_init(&lcd_dev->lcd_cdev, &tft_char_dev_ops);
+    ret = cdev_add(&lcd_dev->lcd_cdev, lcd_dev->dev_number, DEV_CNT);
     if(ret < 0) {
         pr_err("add cdev failed, err_code : %d \r\n", ret);
         goto add_err;
     }
 	// class create
-    lcd_class = class_create(THIS_MODULE, DEV_NAME);
-    lcd_device = device_create(lcd_class, NULL, spi_lcd_dev_number, NULL, DEV_NAME);
+    lcd_dev->lcd_class = class_create(THIS_MODULE, DEV_NAME);
+    lcd_dev->lcd_device = device_create(lcd_dev->lcd_class, NULL, lcd_dev->dev_number, NULL, DEV_NAME);
 
-	pr_info("max_speed_hz = %d\r\n", spi_lcd_dev->max_speed_hz);
-	pr_info("chip_select = %d\r\n", (int)spi_lcd_dev->chip_select);
-	pr_info("bits_per_word = %d\r\n", (int)spi_lcd_dev->bits_per_word);
-	pr_info("mode = %d\r\n", spi_lcd_dev->mode);
-	pr_info("cs_gpio = %d\r\n", spi_lcd_dev->cs_gpio);
+	pr_info("max_speed_hz = %d\r\n", lcd_dev->lcd_spi_dev->max_speed_hz);
+	pr_info("chip_select = %d\r\n", (int)lcd_dev->lcd_spi_dev->chip_select);
+	pr_info("bits_per_word = %d\r\n", (int)lcd_dev->lcd_spi_dev->bits_per_word);
+	pr_info("mode = %d\r\n", lcd_dev->lcd_spi_dev->mode);
 	
   	return 0;
 
 add_err:
-	unregister_chrdev_region(spi_lcd_dev_number, DEV_CNT);
+	unregister_chrdev_region(lcd_dev->dev_number, DEV_CNT);
 	pr_err("add char dev error \r\n");
 	
 alloc_err:
@@ -588,10 +600,11 @@ alloc_err:
 
 static int lcd_remove(struct spi_device *spi) {
 	pr_info("lcd driver remove");
-	device_destroy(lcd_class, spi_lcd_dev_number);
-	class_destroy(lcd_class);
-	cdev_del(&lcd_char_dev);
-	unregister_chrdev_region(spi_lcd_dev_number, DEV_CNT);
+	LCD_DEVICE * lcd_dev = container_of(spi, LCD_DEVICE, spi_device);
+	device_destroy(lcd_dev->lcd_class, lcd_dev->dev_number);
+	class_destroy(lcd_dev->lcd_class);
+	cdev_del(&lcd_dev->lcd_cdev);
+	unregister_chrdev_region(lcd_dev->dev_number, DEV_CNT);
 }
 
 static const struct of_device_id lcd_of_match_table[] = {
