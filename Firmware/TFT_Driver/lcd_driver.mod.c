@@ -28,6 +28,7 @@ __attribute__((section("__versions"))) = {
 	{ 0x10d06f3b, "module_layout" },
 	{ 0xd633690a, "driver_unregister" },
 	{ 0xe85c13b, "__spi_register_driver" },
+	{ 0x8e865d3c, "arm_delay_ops" },
 	{ 0x7772b225, "device_create" },
 	{ 0xb489cb8d, "__class_create" },
 	{ 0x99d31bfb, "cdev_add" },
@@ -62,4 +63,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "99165B7954392371E5F9E41");
+MODULE_INFO(srcversion, "DCB0124DA23B96D99E502EC");

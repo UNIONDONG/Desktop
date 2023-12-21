@@ -37,8 +37,8 @@ typedef struct {
 	int lcd_pin_cs;
 	
 	/* lcd property*/
-	int lcd_width;
-	int lcd_height;
+	uint32_t lcd_width;
+	uint32_t lcd_height;
 	LCD_DIS lcd_dis;
 	
 } LCD_DEVICE;
@@ -358,11 +358,12 @@ static void lcd_clean(LCD_DEVICE *tft_dev, uint16_t Color)
 
 	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
 
-    for(i = 0; i < LCD_HEIGHT; i++)
+    for(i = 0; i < height; i++)
     {
-        for(j = 0; j < LCD_WIDTH;j++)
+        for(j = 0; j < width;j++)
         {
-            tft_write_data_16bit(tft_dev, Color);
+            tft_write_data_16bit(tft_dev, Image[i * height + j]);
+			pr_info("set color pinex :%d\n", Image[i * height + j]);
         }
     }
 }
@@ -441,10 +442,10 @@ static int tft_open(struct inode *inode, struct file *file)
 	// LCD_DEVICE *tft_dev = lcd_tft;
 	file->private_data = tft_dev;
 
-	pr_info("origin cdev addr: 0x%x , current addr : 0x%x\n", tft_cdev, &tft_dev->lcd_cdev);
+	pr_info("origin cdev addr: 0x%x , current addr : 0x%x\n", (void *)tft_cdev, &tft_dev->lcd_cdev);
 	pr_info("lcd init ......");
-	// tft_init(tft_dev);
-	// lcd_clean(tft_dev, BLACK);
+	tft_init(tft_dev);
+	lcd_clean(tft_dev, BLACK);
 	return 0;
 }
 
@@ -469,7 +470,7 @@ static int tft_write(struct file *filp, const char __user *buf, size_t cnt, loff
 static int tft_release(struct inode *inode, struct file *filp)
 {
 	LCD_DEVICE *tft_dev = filp->private_data;
-	pr_info("origin addr: 0x%x , current addr : 0x%x\n", lcd_tft, tft_dev);
+	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)lcd_tft, (void *)tft_dev);
 	pr_info("exit\n");
 	// lcd_clean(tft_dev, WHITE);
 	return 0;
@@ -504,7 +505,7 @@ static int lcd_hardware_reset(LCD_DEVICE *lcd_dev)
 		return -1;
 	} else {
 		pr_info("lcd_pin_dc is %d\n", lcd_dev->lcd_pin_dc);
-		gpio_direction_output(lcd_dev->lcd_pin_dc, 1);
+		LCD_PIN_SET_LOW(lcd_dev->lcd_pin_dc);
 	}
         
     lcd_dev->lcd_pin_reset = of_get_named_gpio(lcd_dev->lcd_dev_node, "reset-pin", 0);
@@ -513,7 +514,7 @@ static int lcd_hardware_reset(LCD_DEVICE *lcd_dev)
 		return -1;
 	} else {
 		pr_info("lcd_pin_reset is %d\n", lcd_dev->lcd_pin_reset);
-		gpio_direction_output(lcd_dev->lcd_pin_reset, 1);
+		LCD_PIN_SET_LOW(lcd_dev->lcd_pin_reset);
 	}
 
     lcd_dev->lcd_pin_backlight = of_get_named_gpio(lcd_dev->lcd_dev_node, "backlight-pin", 0);
@@ -522,7 +523,7 @@ static int lcd_hardware_reset(LCD_DEVICE *lcd_dev)
 		return -1;
 	} else {
 		pr_info("lcd_pin_backlight is %d\n", lcd_dev->lcd_pin_backlight);
-		gpio_direction_output(lcd_dev->lcd_pin_backlight, 1);
+		LCD_PIN_SET_HIGH(lcd_dev->lcd_pin_backlight);
 	}
 
     ret = of_property_read_u32_index(lcd_dev->lcd_dev_node, "lcd-width", 0, &lcd_dev->lcd_width);
@@ -562,7 +563,7 @@ static int lcd_probe(struct spi_device *spi)
 
 	// spi config
 	lcd_dev->lcd_spi_dev = spi;
-	pr_info("origin addr: 0x%x , current addr : 0x%x\n", spi, lcd_dev->lcd_spi_dev);
+	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)spi, (void *)&lcd_dev->lcd_cdev);
 
 	lcd_dev->lcd_spi_dev->mode = SPI_MODE_0;
 	lcd_dev->lcd_spi_dev->max_speed_hz = 20000000;
@@ -622,7 +623,7 @@ static int lcd_remove(struct spi_device *spi)
 {
 	LCD_DEVICE *lcd_dev = spi_get_drvdata(spi);
 
-	pr_info("origin addr: 0x%x , current addr : 0x%x\n", spi, lcd_dev->lcd_spi_dev);
+	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)spi, (void *)lcd_dev->lcd_spi_dev);
 	pr_info("lcd driver remove");
 	device_destroy(lcd_dev->lcd_class, lcd_dev->dev_number);
 	class_destroy(lcd_dev->lcd_class);
