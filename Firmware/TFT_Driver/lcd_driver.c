@@ -368,70 +368,70 @@ static void lcd_clean(LCD_DEVICE *tft_dev, uint16_t Color)
     }
 }
 
-// void LCD_Disp_Pic(void)
-// {
-//     // struct lcd_spi_dev *dev = &lcd_dev;
-//     int i,j;
-//     static char pic[128];
-//
-//     for(i=0; i<128; i++)
-//     {
-//         pic[i] = 0xf8;
-//     }
-//
-//     /* 设置屏幕和显示部分 */
-//     lcd_setwindows(0, 0, 159, 127);
-//     for(i=0; i<128; i++)
-//     {
-//         for(j=0; j<160;j++)
-//         {
-//             tft_write_data_16bit(GRAY2);
-//         }
-//     }
-//
-//
-//
-//
-//     lcd_setwindows(0, 0, 79, 63);
-//     for(i=0; i<79; i++)
-//     {
-//         for(j=0; j<63;j++)
-//         {
-//             tft_write_data_16bit(WHITE);
-//         }
-//     }
-//
-//     lcd_setwindows(0, 63, 79, 127);
-//     for(i=0; i<79; i++)
-//     {
-//         for(j=0; j<63;j++)
-//         {
-//             tft_write_data_16bit(RED);
-//         }
-//     }
-//
-//     lcd_setwindows(79, 0, 159, 63);
-//     for(i=0; i<79; i++)
-//     {
-//         for(j=0; j<63;j++)
-//         {
-//             tft_write_data_16bit(GREEN);
-//         }
-//     }
-//
-//     lcd_setwindows(79, 63, 159, 127);
-//     for(i=0; i<79; i++)
-//     {
-//         for(j=0; j<63;j++)
-//         {
-//             tft_write_data_16bit(YELLOW);
-//         }
-//     }
-//
-//     mdelay(10);
-//
-//     printk(KERN_ALERT "LCD display picture ok!\n");
-// }
+void LCD_Disp_Pic(LCD_DEVICE *tft_dev)
+{
+    // struct lcd_spi_dev *dev = &lcd_dev;
+    int i,j;
+    static char pic[128];
+
+    for(i=0; i<128; i++)
+    {
+        pic[i] = 0xf8;
+    }
+
+    /* 设置屏幕和显示部分 */
+    lcd_setwindows(tft_dev, 0, 0, 159, 127);
+    for(i=0; i<128; i++)
+    {
+        for(j=0; j<160;j++)
+        {
+            tft_write_data_16bit(tft_dev, GRAY2);
+        }
+    }
+
+
+
+
+    lcd_setwindows(tft_dev, 0, 0, 79, 63);
+    for(i=0; i<79; i++)
+    {
+        for(j=0; j<63;j++)
+        {
+            tft_write_data_16bit(tft_dev, WHITE);
+        }
+    }
+
+    lcd_setwindows(tft_dev, 0, 63, 79, 127);
+    for(i=0; i<79; i++)
+    {
+        for(j=0; j<63;j++)
+        {
+            tft_write_data_16bit(tft_dev, RED);
+        }
+    }
+
+    lcd_setwindows(tft_dev, 79, 0, 159, 63);
+    for(i=0; i<79; i++)
+    {
+        for(j=0; j<63;j++)
+        {
+            tft_write_data_16bit(tft_dev, GREEN);
+        }
+    }
+
+    lcd_setwindows(tft_dev, 79, 63, 159, 127);
+    for(i=0; i<79; i++)
+    {
+        for(j=0; j<63;j++)
+        {
+            tft_write_data_16bit(tft_dev, YELLOW);
+        }
+    }
+
+    mdelay(10);
+
+    printk(KERN_ALERT "LCD display picture ok!\n");
+}
 
 
 
@@ -439,13 +439,14 @@ static int tft_open(struct inode *inode, struct file *file)
 {
 	struct cdev *tft_cdev = inode->i_cdev;
 	LCD_DEVICE *tft_dev = container_of(tft_cdev, LCD_DEVICE, lcd_cdev);
-	// LCD_DEVICE *tft_dev = lcd_tft;
+
 	file->private_data = tft_dev;
 
 	pr_info("origin cdev addr: 0x%x , current addr : 0x%x\n", (void *)tft_cdev, &tft_dev->lcd_cdev);
 	pr_info("lcd init ......");
 	tft_init(tft_dev);
-	lcd_clean(tft_dev, BLACK);
+	LCD_Disp_Pic(tft_dev)
+	//lcd_clean(tft_dev, BLACK);
 	return 0;
 }
 
@@ -557,7 +558,6 @@ static int lcd_probe(struct spi_device *spi)
 		ret = -ENOMEM;
 		goto alloc_err;
 	}
-	lcd_tft = lcd_dev;
 
 	lcd_hardware_reset(lcd_dev);
 
@@ -568,7 +568,6 @@ static int lcd_probe(struct spi_device *spi)
 	lcd_dev->lcd_spi_dev->mode = SPI_MODE_0;
 	lcd_dev->lcd_spi_dev->max_speed_hz = 20000000;
     spi_setup(lcd_dev->lcd_spi_dev);
-	spi_set_drvdata(lcd_dev->lcd_spi_dev, lcd_dev);
 	
 	// char dev create
     ret = alloc_chrdev_region(&lcd_dev->dev_number, 0, DEV_CNT, DEV_NAME);
@@ -598,6 +597,8 @@ static int lcd_probe(struct spi_device *spi)
 		ret = PTR_ERR(lcd_dev->lcd_device);
 		goto device_err;
 	}
+
+	spi_set_drvdata(lcd_dev->lcd_spi_dev, lcd_dev);
 
 	pr_info("max_speed_hz = %d\n", lcd_dev->lcd_spi_dev->max_speed_hz);
 	pr_info("chip_select = %d\n", (int)lcd_dev->lcd_spi_dev->chip_select);
