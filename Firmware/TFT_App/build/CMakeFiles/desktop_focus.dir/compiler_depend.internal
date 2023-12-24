@@ -322,4 +322,6 @@ CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o
  /home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include/bits/environments.h
  /home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include/bits/confname.h
  /home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/arm-linux-gnueabihf/libc/usr/include/getopt.h
+ /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_BMP.h
+ /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_Paint.h
 

@@ -6,3 +6,5 @@
 extern int Welcome_Show(int fd);
 
 extern int Desktop_Focus(int fd);
+
+extern int Picture_Show(int fd);

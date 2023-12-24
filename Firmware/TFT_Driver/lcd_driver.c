@@ -142,6 +142,31 @@ static void tft_write_data_16bit(LCD_DEVICE *tft_dev, uint16_t data)
 	kfree(trans);
 }
 
+static void tft_write_data_n16bit(LCD_DEVICE *tft_dev, uint16_t *data, uint16_t len)
+{
+	struct spi_message msg;
+	struct spi_transfer *trans;
+	// uint16_t *txdata = data;
+
+	trans = kzalloc(sizeof(struct spi_transfer), GFP_KERNEL);
+	if (IS_ERR_OR_NULL(trans)) {
+		pr_err("alloc spi transfer failed.\n");
+		return;
+	}
+
+	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
+
+	trans->tx_buf = data;
+	trans->len = len * 2;
+	trans->bits_per_word = 16;
+	
+	spi_message_init(&msg);
+	spi_message_add_tail(trans, &msg);
+	spi_sync(tft_dev->lcd_spi_dev, &msg);
+	
+	kfree(trans);
+}
+
 static void tft_init_reg(LCD_DEVICE *tft_dev)
 {
     //ST7735R Frame Rate
@@ -247,22 +272,20 @@ void tft_set_gram_scanway(LCD_DEVICE *tft_dev, LCD_SCAN_DIR Scan_dir)
 
     //Get the screen scan direction
 	LCD_DIS *lcd_dis = &tft_dev->lcd_dis;
-
 	lcd_dis->LCD_Scan_Dir = Scan_dir;
 
 	//Get GRAM and LCD width and height
 	if(Scan_dir == L2R_U2D || Scan_dir == L2R_D2U || Scan_dir == R2L_U2D || Scan_dir == R2L_D2U){
-		lcd_dis->LCD_Dis_Column	= LCD_HEIGHT ;
-		lcd_dis->LCD_Dis_Page = LCD_WIDTH ;		
+		lcd_dis->LCD_Dis_Column	= tft_dev->lcd_height;
+		lcd_dis->LCD_Dis_Page = tft_dev->lcd_width;		
 		lcd_dis->LCD_X_Adjust = LCD_X;
 		lcd_dis->LCD_Y_Adjust = LCD_Y;
 	}else{
-		lcd_dis->LCD_Dis_Column	= LCD_WIDTH ;
-		lcd_dis->LCD_Dis_Page = LCD_HEIGHT ;	
+		lcd_dis->LCD_Dis_Column	= tft_dev->lcd_width;
+		lcd_dis->LCD_Dis_Page = tft_dev->lcd_height ;	
 		lcd_dis->LCD_X_Adjust = LCD_Y;
 		lcd_dis->LCD_Y_Adjust = LCD_X;
 	}
-
     // Gets the scan direction of GRAM
     switch (Scan_dir) {
     case L2R_U2D:
@@ -321,14 +344,13 @@ parameter:
 ********************************************************************************/
 void lcd_setwindows(LCD_DEVICE *tft_dev, uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend )
 {
-
     //set the X coordinates
     tft_write_command(tft_dev, 0x2A);
     tft_write_data(tft_dev, 0x00);						//Set the horizontal starting point to the high octet
     tft_write_data(tft_dev, (Xstart & 0xff) + tft_dev->lcd_dis.LCD_X_Adjust);			//Set the horizontal starting point to the low octet
     tft_write_data(tft_dev, 0x00 );				//Set the horizontal end to the high octet
     tft_write_data (tft_dev, (( Xend ) & 0xff) + tft_dev->lcd_dis.LCD_X_Adjust);	//Set the horizontal end to the low octet
-
+	
     //set the Y coordinates
     tft_write_command(tft_dev, 0x2B);
     tft_write_data(tft_dev, 0x00);
@@ -343,97 +365,16 @@ void lcd_setwindows(LCD_DEVICE *tft_dev, uint16_t Xstart, uint16_t Ystart, uint1
 static void lcd_clean(LCD_DEVICE *tft_dev, uint16_t Color)
 {
     uint16_t j, i;
-	uint16_t height = tft_dev->lcd_height;
-	uint16_t width = tft_dev->lcd_width;
+	uint16_t *datas = kmalloc(sizeof(uint16_t) * tft_dev->lcd_height * tft_dev->lcd_width, GFP_KERNEL);
 
-    uint16_t Image[height * width];
-    
-    Color = ((Color<<8)&0xff00) | (Color>>8);
-   
-    for (j = 0; j < height * width; ++j) {
-        Image[j] = Color;
-    }
-    
-    lcd_setwindows(tft_dev, 0, 0, width, height);
+    lcd_setwindows(tft_dev, 0, 0, tft_dev->lcd_width - 1, tft_dev->lcd_height - 1);
 
-	LCD_PIN_SET_HIGH(tft_dev->lcd_pin_dc);
-
-    for(i = 0; i < height; i++)
-    {
-        for(j = 0; j < width;j++)
-        {
-            tft_write_data_16bit(tft_dev, Image[i * height + j]);
-			pr_info("set color pinex :%d\n", Image[i * height + j]);
-        }
-    }
+	for(i = 0; i < tft_dev->lcd_height; ++i)
+		for (j = 0; j < tft_dev->lcd_width; ++j) {
+			datas[i * tft_dev->lcd_width + j] = Color;
+		}
+	tft_write_data_n16bit(tft_dev, datas, tft_dev->lcd_height * tft_dev->lcd_width);
 }
-
-void LCD_Disp_Pic(LCD_DEVICE *tft_dev)
-{
-    // struct lcd_spi_dev *dev = &lcd_dev;
-    int i,j;
-    static char pic[128];
-
-    for(i=0; i<128; i++)
-    {
-        pic[i] = 0xf8;
-    }
-
-    /* 设置屏幕和显示部分 */
-    lcd_setwindows(tft_dev, 0, 0, 159, 127);
-    for(i=0; i<128; i++)
-    {
-        for(j=0; j<160;j++)
-        {
-            tft_write_data_16bit(tft_dev, GRAY2);
-        }
-    }
-
-
-
-
-    lcd_setwindows(tft_dev, 0, 0, 79, 63);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            tft_write_data_16bit(tft_dev, WHITE);
-        }
-    }
-
-    lcd_setwindows(tft_dev, 0, 63, 79, 127);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            tft_write_data_16bit(tft_dev, RED);
-        }
-    }
-
-    lcd_setwindows(tft_dev, 79, 0, 159, 63);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            tft_write_data_16bit(tft_dev, GREEN);
-        }
-    }
-
-    lcd_setwindows(tft_dev, 79, 63, 159, 127);
-    for(i=0; i<79; i++)
-    {
-        for(j=0; j<63;j++)
-        {
-            tft_write_data_16bit(tft_dev, YELLOW);
-        }
-    }
-
-    mdelay(10);
-
-    printk(KERN_ALERT "LCD display picture ok!\n");
-}
-
-
 
 static int tft_open(struct inode *inode, struct file *file)
 {
@@ -442,11 +383,9 @@ static int tft_open(struct inode *inode, struct file *file)
 
 	file->private_data = tft_dev;
 
-	pr_info("origin cdev addr: 0x%x , current addr : 0x%x\n", (void *)tft_cdev, &tft_dev->lcd_cdev);
 	pr_info("lcd init ......");
 	tft_init(tft_dev);
-	LCD_Disp_Pic(tft_dev)
-	//lcd_clean(tft_dev, BLACK);
+	lcd_clean(tft_dev, BLACK);
 	return 0;
 }
 
@@ -459,10 +398,11 @@ static int tft_write(struct file *filp, const char __user *buf, size_t cnt, loff
 	Image = (uint16_t *)kzalloc(cnt, GFP_KERNEL);
 	num = copy_from_user(Image, buf, cnt);
 	pr_info("write ......\n");
-    for(i = 0; i < cnt / 2; i++)
-    {
-        tft_write_data_16bit(tft_dev, Image[i]);
-    }
+	tft_write_data_n16bit(tft_dev, Image, cnt / 2);
+    // for(i = 0; i < cnt / 2; i++)
+    // {
+    //     tft_write_data_16bit(tft_dev, Image[i]);
+    // }
 
 	kfree(Image);
 	return 0;
@@ -471,9 +411,8 @@ static int tft_write(struct file *filp, const char __user *buf, size_t cnt, loff
 static int tft_release(struct inode *inode, struct file *filp)
 {
 	LCD_DEVICE *tft_dev = filp->private_data;
-	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)lcd_tft, (void *)tft_dev);
 	pr_info("exit\n");
-	// lcd_clean(tft_dev, WHITE);
+	lcd_clean(tft_dev, WHITE);
 	return 0;
 }
 

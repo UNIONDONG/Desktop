@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include "GUI_BMP.h"
 int Welcome_Show(int fd)
 {
 	int ret = 0;
@@ -30,26 +31,59 @@ int Desktop_Focus(int fd)
 	UWORD *BlackImage;
 	UDOUBLE Imagesize = LCD_1IN8_HEIGHT * LCD_1IN8_WIDTH * 2;
     PAINT_TIME sPaint_time; //time struct
+
+	if((BlackImage = (UWORD *)malloc(Imagesize)) == NULL) {
+		printf("Failed to apply for black memory...\r\n");
+		exit(0);
+	}
 	
+	// /*1.Create a new image cache named IMAGE_RGB and fill it with white*/
+	Paint_NewImage(BlackImage, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, 0, BLACK, 16);
+	Paint_Clear(BLACK);
+
     sPaint_time.Min = 24;
     sPaint_time.Sec = 59;
-	Paint_ClearWindow(5, 10, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, BLACK);
-	Paint_DrawTime(15, 20, &sPaint_time, &Font48, WHITE, YELLOW);
+
+	while (1) {
+		sPaint_time.Sec--;
+		if (sPaint_time.Sec == 255) {
+			sPaint_time.Sec = 59;
+			sPaint_time.Min--;
+			if (sPaint_time.Min == 255) {
+				break;	
+			}
+		}
+        Paint_ClearWindow(0, 0, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, BLACK);
+        // Paint_DrawTime(15, 20, &sPaint_time, &Font48, BLACK, YELLOW);
+        Paint_DrawTime(15 , 59 - sPaint_time.Sec, &sPaint_time, &Font48, BLACK, YELLOW);
+ 		write(fd, BlackImage, Imagesize);
+		sleep(1);
+	}
+    free(BlackImage);
+    BlackImage = NULL;
+	return ret;
+}
+
+int Picture_Show(int fd)
+{
+	UWORD *BlackImage;
+	UDOUBLE Imagesize = LCD_1IN8_HEIGHT * LCD_1IN8_WIDTH * 2;
+
+	if((BlackImage = (UWORD *)malloc(Imagesize)) == NULL) {
+		printf("Failed to apply for black memory...\r\n");
+		exit(0);
+	}
+
+	printf("show bmp\r\n");
+
+	// /*1.Create a new image cache named IMAGE_RGB and fill it with white*/
+	Paint_NewImage(BlackImage, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, 0, BLACK, 16);
+
+	GUI_ReadBmp("./pic/test.bmp");
+
 	write(fd, BlackImage, Imagesize);
 
-	// while (1) {
-	// 	sPaint_time.Sec--;
-	// 	if (sPaint_time.Sec == 255) {
-	// 		sPaint_time.Sec = 59;
-	// 		sPaint_time.Min--;
-	// 		if (sPaint_time.Min == 255) {
-	// 			break;	
-	// 		}
-	// 	}
- //        Paint_ClearWindow(5, 10, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, BLACK);
- //        Paint_DrawTime(15, 20, &sPaint_time, &Font48, WHITE, YELLOW);
- // 		write(fd, BlackImage, Imagesize);
-	// 	sleep(10);
-	// }
-	return ret;
+	sleep(1);
+    free(BlackImage);
+    BlackImage = NULL;
 }
