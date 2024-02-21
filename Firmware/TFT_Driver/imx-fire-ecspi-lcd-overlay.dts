@@ -6,10 +6,12 @@
  * date :   2022-08-14
  * version : A001
  */
-#include "../imx6ul-pinfunc.h"
-
 /dts-v1/;
 /plugin/;
+
+#include "../imx6ul-pinfunc.h"
+#include "dt-bindings/interrupt-controller/irq.h"
+#include "dt-bindings/gpio/gpio.h"
 
 / {
     fragment@0 {
@@ -17,7 +19,7 @@
         __overlay__ {
             fsl,spi-num-chipselects = <1>;
 			pinctrl-names = "default";
-			pinctrl-0 = <&pinctrl_ecspi1>;
+			pinctrl-0 = <&pinctrl_ecspi1>, <&pinctrl_button>;
 			status = "okay";
 			cs-gpios = <&gpio4 26 0>;
 			#address-cells = <1>;
@@ -33,6 +35,11 @@
                 spi-max-frequency = <20000000>;
                 reg = <0>;
 				status = "okay";
+
+				button_gpio = <&gpio5 1 GPIO_ACTIVE_LOW>;
+				interrupt-parent = <&gpio5>;
+				interrupts = <1 IRQ_TYPE_EDGE_RISING>;
+
             };
         };
     };
@@ -50,4 +57,14 @@
             };
         };
     };
+	fragment@2 {
+		target = <&iomuxc>;
+		__overlay__{
+			pinctrl_button: buttongrp {
+				fsl,pins =<
+					MX6UL_PAD_SNVS_TAMPER1__GPIO5_IO01  0x10b0
+				>;
+			};
+		};
+	};
 };

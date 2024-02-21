@@ -393,6 +393,54 @@ lib/GUI/GUI_Paint.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.s
 .PHONY : lib/GUI/GUI_Paint.c.s
 
+src/button.o: src/button.c.o
+.PHONY : src/button.o
+
+# target to build an object file
+src/button.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/src/button.c.o
+.PHONY : src/button.c.o
+
+src/button.i: src/button.c.i
+.PHONY : src/button.i
+
+# target to preprocess a source file
+src/button.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/src/button.c.i
+.PHONY : src/button.c.i
+
+src/button.s: src/button.c.s
+.PHONY : src/button.s
+
+# target to generate assembly for a file
+src/button.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/src/button.c.s
+.PHONY : src/button.c.s
+
+src/custom_print.o: src/custom_print.c.o
+.PHONY : src/custom_print.o
+
+# target to build an object file
+src/custom_print.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/src/custom_print.c.o
+.PHONY : src/custom_print.c.o
+
+src/custom_print.i: src/custom_print.c.i
+.PHONY : src/custom_print.i
+
+# target to preprocess a source file
+src/custom_print.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/src/custom_print.c.i
+.PHONY : src/custom_print.c.i
+
+src/custom_print.s: src/custom_print.c.s
+.PHONY : src/custom_print.s
+
+# target to generate assembly for a file
+src/custom_print.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/desktop_focus.dir/build.make CMakeFiles/desktop_focus.dir/src/custom_print.c.s
+.PHONY : src/custom_print.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -483,6 +531,12 @@ help:
 	@echo "... lib/GUI/GUI_Paint.o"
 	@echo "... lib/GUI/GUI_Paint.i"
 	@echo "... lib/GUI/GUI_Paint.s"
+	@echo "... src/button.o"
+	@echo "... src/button.i"
+	@echo "... src/button.s"
+	@echo "... src/custom_print.o"
+	@echo "... src/custom_print.i"
+	@echo "... src/custom_print.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

@@ -1,3 +1,4 @@
+#include "asm-generic/gpio.h"
 #include "linux/delay.h"
 #include "linux/device.h"
 #include "linux/fs.h"
@@ -13,12 +14,17 @@
 #include <linux/export.h>
 #include "lcd_driver.h"
 #include "linux/gfp.h"
+#include "linux/interrupt.h"
+#include "linux/of_irq.h"
 #include "linux/slab.h"
 #include "linux/uaccess.h"
 
 #define DEV_NAME "ecspi_lcd"
 #define DEV_CNT (1)
 #define SCAN_DIR_DFT  U2D_R2L  	//Default scan direction = L2R_U2D
+
+static int button_gpio_number;
+static int button_interrupt_number;
 
 typedef struct {
 	uint8_t id;
@@ -43,8 +49,6 @@ typedef struct {
 	
 } LCD_DEVICE;
 
-static LCD_DEVICE *lcd_tft;
-
 #define LCD_WIDTH  160  //LCD width
 #define LCD_HEIGHT  128 //LCD height
 #define LCD_X	 2
@@ -54,6 +58,16 @@ static LCD_DEVICE *lcd_tft;
 	gpio_direction_output(pin, 1)
 #define LCD_PIN_SET_LOW(pin) \
 	gpio_direction_output(pin, 0)
+
+
+static irqreturn_t button_irq_hander(int irq, void *dev_id)
+{
+	pr_info("button trigger\n");
+	// printk_green("button on \n");
+	/*按键状态加一*/
+	// atomic_inc(&button_status);
+	return IRQ_HANDLED;
+}
 
 static void tft_reset(LCD_DEVICE *tft_dev)
 {
@@ -113,7 +127,7 @@ static void tft_write_data(LCD_DEVICE *tft_dev, uint8_t data)
 	kfree(trans);
 }
 
-static void tft_write_data_16bit(LCD_DEVICE *tft_dev, uint16_t data)
+ __attribute__((unused)) static void tft_write_data_16bit(LCD_DEVICE *tft_dev, uint16_t data)
 {
 	struct spi_message msg;
 	struct spi_transfer *trans;
@@ -391,13 +405,12 @@ static int tft_open(struct inode *inode, struct file *file)
 
 static int tft_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *off)
 {
-	int num = 0, i = 0;
+	int num = 0;
 	LCD_DEVICE *tft_dev = filp->private_data;
 
 	uint16_t *Image;
 	Image = (uint16_t *)kzalloc(cnt, GFP_KERNEL);
 	num = copy_from_user(Image, buf, cnt);
-	pr_info("write ......\n");
 	tft_write_data_n16bit(tft_dev, Image, cnt / 2);
     // for(i = 0; i < cnt / 2; i++)
     // {
@@ -502,7 +515,7 @@ static int lcd_probe(struct spi_device *spi)
 
 	// spi config
 	lcd_dev->lcd_spi_dev = spi;
-	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)spi, (void *)&lcd_dev->lcd_cdev);
+//	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)spi, (void *)&lcd_dev->lcd_cdev);
 
 	lcd_dev->lcd_spi_dev->mode = SPI_MODE_0;
 	lcd_dev->lcd_spi_dev->max_speed_hz = 20000000;
@@ -539,6 +552,30 @@ static int lcd_probe(struct spi_device *spi)
 
 	spi_set_drvdata(lcd_dev->lcd_spi_dev, lcd_dev);
 
+	/*button interrupt*/
+    button_gpio_number = of_get_named_gpio(lcd_dev->lcd_dev_node, "button_gpio", 0);
+	if (IS_ERR_VALUE(button_gpio_number)) {
+		pr_info("button gpio no set\n");
+	} else {
+		pr_info("button gpio is %d\n", button_gpio_number);
+		ret = gpio_request(button_gpio_number, "button_gpio") ;
+		if (ret < 0) {
+			pr_err("button_gpio request error\n");
+			gpio_free(button_gpio_number);
+			return -1;
+		}
+		ret = gpio_direction_input(button_gpio_number);
+		button_interrupt_number = irq_of_parse_and_map(lcd_dev->lcd_dev_node, 0);
+		pr_info("irq_of_parse_and_map! =  %d \n", button_interrupt_number);
+
+		ret = request_irq(button_interrupt_number, button_irq_hander, IRQF_TRIGGER_RISING, "button_interrupt", lcd_dev->lcd_device);
+		if (ret != 0) {
+			pr_err("request irq error");
+			free_irq(button_interrupt_number, lcd_dev->lcd_device);
+			return -1;
+		}
+	}
+ 
 	pr_info("max_speed_hz = %d\n", lcd_dev->lcd_spi_dev->max_speed_hz);
 	pr_info("chip_select = %d\n", (int)lcd_dev->lcd_spi_dev->chip_select);
 	pr_info("bits_per_word = %d\n", (int)lcd_dev->lcd_spi_dev->bits_per_word);
@@ -563,7 +600,7 @@ static int lcd_remove(struct spi_device *spi)
 {
 	LCD_DEVICE *lcd_dev = spi_get_drvdata(spi);
 
-	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)spi, (void *)lcd_dev->lcd_spi_dev);
+//	pr_info("origin addr: 0x%x , current addr : 0x%x\n", (void *)spi, (void *)lcd_dev->lcd_spi_dev);
 	pr_info("lcd driver remove");
 	device_destroy(lcd_dev->lcd_class, lcd_dev->dev_number);
 	class_destroy(lcd_dev->lcd_class);

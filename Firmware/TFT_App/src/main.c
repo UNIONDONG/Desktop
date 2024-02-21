@@ -3,17 +3,19 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "tft_lcd.h"
+#include "button.h"
 
 #define LCD_DEVICE "/dev/ecspi_lcd"
 
 int fd;
-
 
 int main(int argc, char *argv[])
 {
 	int ret = 0;
 	printf("Welcome to Desktop Focus.\n");
 	
+	button_threads_init();
+
 	fd = open(LCD_DEVICE, O_RDWR);
 	if (fd < 0) {
 		printf("open file : %s failed! \n", LCD_DEVICE);
@@ -23,7 +25,7 @@ int main(int argc, char *argv[])
 	Welcome_Show(fd);
 	sleep(3);
 	// Picture_Show(fd);
-	sleep(3);
+	//sleep(3);
 	Desktop_Focus(fd);
 
 	while (1) {

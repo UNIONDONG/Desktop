@@ -69,10 +69,38 @@ include CMakeFiles/desktop_focus.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/desktop_focus.dir/flags.make
 
+CMakeFiles/desktop_focus.dir/src/button.c.o: CMakeFiles/desktop_focus.dir/flags.make
+CMakeFiles/desktop_focus.dir/src/button.c.o: ../src/button.c
+CMakeFiles/desktop_focus.dir/src/button.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/desktop_focus.dir/src/button.c.o"
+	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/src/button.c.o -MF CMakeFiles/desktop_focus.dir/src/button.c.o.d -o CMakeFiles/desktop_focus.dir/src/button.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/button.c
+
+CMakeFiles/desktop_focus.dir/src/button.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/desktop_focus.dir/src/button.c.i"
+	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/button.c > CMakeFiles/desktop_focus.dir/src/button.c.i
+
+CMakeFiles/desktop_focus.dir/src/button.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/desktop_focus.dir/src/button.c.s"
+	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/button.c -o CMakeFiles/desktop_focus.dir/src/button.c.s
+
+CMakeFiles/desktop_focus.dir/src/custom_print.c.o: CMakeFiles/desktop_focus.dir/flags.make
+CMakeFiles/desktop_focus.dir/src/custom_print.c.o: ../src/custom_print.c
+CMakeFiles/desktop_focus.dir/src/custom_print.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/desktop_focus.dir/src/custom_print.c.o"
+	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/src/custom_print.c.o -MF CMakeFiles/desktop_focus.dir/src/custom_print.c.o.d -o CMakeFiles/desktop_focus.dir/src/custom_print.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/custom_print.c
+
+CMakeFiles/desktop_focus.dir/src/custom_print.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/desktop_focus.dir/src/custom_print.c.i"
+	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/custom_print.c > CMakeFiles/desktop_focus.dir/src/custom_print.c.i
+
+CMakeFiles/desktop_focus.dir/src/custom_print.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/desktop_focus.dir/src/custom_print.c.s"
+	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/custom_print.c -o CMakeFiles/desktop_focus.dir/src/custom_print.c.s
+
 CMakeFiles/desktop_focus.dir/src/main.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/src/main.c.o: ../src/main.c
 CMakeFiles/desktop_focus.dir/src/main.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/desktop_focus.dir/src/main.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/desktop_focus.dir/src/main.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/src/main.c.o -MF CMakeFiles/desktop_focus.dir/src/main.c.o.d -o CMakeFiles/desktop_focus.dir/src/main.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/main.c
 
 CMakeFiles/desktop_focus.dir/src/main.c.i: cmake_force
@@ -86,7 +114,7 @@ CMakeFiles/desktop_focus.dir/src/main.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o: ../src/tft_lcd.c
 CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o -MF CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o.d -o CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/tft_lcd.c
 
 CMakeFiles/desktop_focus.dir/src/tft_lcd.c.i: cmake_force
@@ -100,7 +128,7 @@ CMakeFiles/desktop_focus.dir/src/tft_lcd.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o: ../lib/Fonts/font12.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font12.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.i: cmake_force
@@ -114,7 +142,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o: ../lib/Fonts/font12CN.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font12CN.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.i: cmake_force
@@ -128,7 +156,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font12CN.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o: ../lib/Fonts/font16.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font16.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.i: cmake_force
@@ -142,7 +170,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font16.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o: ../lib/Fonts/font20.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font20.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.i: cmake_force
@@ -156,7 +184,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font20.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o: ../lib/Fonts/font24.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font24.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.i: cmake_force
@@ -170,7 +198,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font24.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o: ../lib/Fonts/font24CN.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font24CN.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.i: cmake_force
@@ -184,7 +212,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font24CN.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o: ../lib/Fonts/font48.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font48.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.i: cmake_force
@@ -198,7 +226,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font48.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o: ../lib/Fonts/font50.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font50.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.i: cmake_force
@@ -212,7 +240,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font50.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o: ../lib/Fonts/font8.c
 CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o -MF CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o.d -o CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font8.c
 
 CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.i: cmake_force
@@ -226,7 +254,7 @@ CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o: ../lib/GUI/GUI_BMP.c
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o -MF CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o.d -o CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_BMP.c
 
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.i: cmake_force
@@ -240,7 +268,7 @@ CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.s: cmake_force
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o: CMakeFiles/desktop_focus.dir/flags.make
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o: ../lib/GUI/GUI_Paint.c
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o: CMakeFiles/desktop_focus.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o"
 	/home/donge/WorkSpace/tools/gcc-linaro-6.3.1-2017.02-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o -MF CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o.d -o CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o -c /home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_Paint.c
 
 CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.i: cmake_force
@@ -253,6 +281,8 @@ CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.s: cmake_force
 
 # Object files for target desktop_focus
 desktop_focus_OBJECTS = \
+"CMakeFiles/desktop_focus.dir/src/button.c.o" \
+"CMakeFiles/desktop_focus.dir/src/custom_print.c.o" \
 "CMakeFiles/desktop_focus.dir/src/main.c.o" \
 "CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o" \
 "CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o" \
@@ -270,6 +300,8 @@ desktop_focus_OBJECTS = \
 # External object files for target desktop_focus
 desktop_focus_EXTERNAL_OBJECTS =
 
+desktop_focus: CMakeFiles/desktop_focus.dir/src/button.c.o
+desktop_focus: CMakeFiles/desktop_focus.dir/src/custom_print.c.o
 desktop_focus: CMakeFiles/desktop_focus.dir/src/main.c.o
 desktop_focus: CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o
 desktop_focus: CMakeFiles/desktop_focus.dir/lib/Fonts/font12.c.o
@@ -285,7 +317,7 @@ desktop_focus: CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o
 desktop_focus: CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o
 desktop_focus: CMakeFiles/desktop_focus.dir/build.make
 desktop_focus: CMakeFiles/desktop_focus.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking C executable desktop_focus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking C executable desktop_focus"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/desktop_focus.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

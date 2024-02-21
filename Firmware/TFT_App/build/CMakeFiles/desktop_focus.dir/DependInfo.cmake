@@ -19,6 +19,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/Fonts/font8.c" "CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o" "gcc" "CMakeFiles/desktop_focus.dir/lib/Fonts/font8.c.o.d"
   "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_BMP.c" "CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o" "gcc" "CMakeFiles/desktop_focus.dir/lib/GUI/GUI_BMP.c.o.d"
   "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/lib/GUI/GUI_Paint.c" "CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o" "gcc" "CMakeFiles/desktop_focus.dir/lib/GUI/GUI_Paint.c.o.d"
+  "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/button.c" "CMakeFiles/desktop_focus.dir/src/button.c.o" "gcc" "CMakeFiles/desktop_focus.dir/src/button.c.o.d"
+  "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/custom_print.c" "CMakeFiles/desktop_focus.dir/src/custom_print.c.o" "gcc" "CMakeFiles/desktop_focus.dir/src/custom_print.c.o.d"
   "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/main.c" "CMakeFiles/desktop_focus.dir/src/main.c.o" "gcc" "CMakeFiles/desktop_focus.dir/src/main.c.o.d"
   "/home/donge/WorkSpace/Program/Desktop_focus/Firmware/TFT_App/src/tft_lcd.c" "CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o" "gcc" "CMakeFiles/desktop_focus.dir/src/tft_lcd.c.o.d"
   )

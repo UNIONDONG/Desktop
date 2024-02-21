@@ -5,6 +5,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "GUI_BMP.h"
+#include "button.h"
+
 int Welcome_Show(int fd)
 {
 	int ret = 0;
@@ -45,6 +47,13 @@ int Desktop_Focus(int fd)
     sPaint_time.Sec = 59;
 
 	while (1) {
+		if (Button_Status_Get()) {
+			Paint_Clear(BLACK);
+			Button_Status_Set(false);
+			sPaint_time.Min = 24;
+			sPaint_time.Sec = 59;
+		}
+
 		sPaint_time.Sec--;
 		if (sPaint_time.Sec == 255) {
 			sPaint_time.Sec = 59;
