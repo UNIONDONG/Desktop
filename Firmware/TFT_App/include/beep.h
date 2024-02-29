@@ -6,3 +6,10 @@
 #define BEEP_OFF "0"
 
 
+int beep_init(void);
+int beep_deinit(void);
+int beep_on(void);
+int beep_off(void);
+int beep_shink(void);
+
+

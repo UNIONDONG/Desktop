@@ -553,28 +553,28 @@ static int lcd_probe(struct spi_device *spi)
 	spi_set_drvdata(lcd_dev->lcd_spi_dev, lcd_dev);
 
 	/*button interrupt*/
-    button_gpio_number = of_get_named_gpio(lcd_dev->lcd_dev_node, "button_gpio", 0);
-	if (IS_ERR_VALUE(button_gpio_number)) {
-		pr_info("button gpio no set\n");
-	} else {
-		pr_info("button gpio is %d\n", button_gpio_number);
-		ret = gpio_request(button_gpio_number, "button_gpio") ;
-		if (ret < 0) {
-			pr_err("button_gpio request error\n");
-			gpio_free(button_gpio_number);
-			return -1;
-		}
-		ret = gpio_direction_input(button_gpio_number);
-		button_interrupt_number = irq_of_parse_and_map(lcd_dev->lcd_dev_node, 0);
-		pr_info("irq_of_parse_and_map! =  %d \n", button_interrupt_number);
-
-		ret = request_irq(button_interrupt_number, button_irq_hander, IRQF_TRIGGER_RISING, "button_interrupt", lcd_dev->lcd_device);
-		if (ret != 0) {
-			pr_err("request irq error");
-			free_irq(button_interrupt_number, lcd_dev->lcd_device);
-			return -1;
-		}
-	}
+ //    button_gpio_number = of_get_named_gpio(lcd_dev->lcd_dev_node, "button_gpio", 0);
+	// if (IS_ERR_VALUE(button_gpio_number)) {
+	// 	pr_info("button gpio no set\n");
+	// } else {
+	// 	pr_info("button gpio is %d\n", button_gpio_number);
+	// 	ret = gpio_request(button_gpio_number, "button_gpio") ;
+	// 	if (ret < 0) {
+	// 		pr_err("button_gpio request error\n");
+	// 		gpio_free(button_gpio_number);
+	// 		return -1;
+	// 	}
+	// 	ret = gpio_direction_input(button_gpio_number);
+	// 	button_interrupt_number = irq_of_parse_and_map(lcd_dev->lcd_dev_node, 0);
+	// 	pr_info("irq_of_parse_and_map! =  %d \n", button_interrupt_number);
+	//
+	// 	ret = request_irq(button_interrupt_number, button_irq_hander, IRQF_TRIGGER_RISING, "button_interrupt", lcd_dev->lcd_device);
+	// 	if (ret != 0) {
+	// 		pr_err("request irq error");
+	// 		free_irq(button_interrupt_number, lcd_dev->lcd_device);
+	// 		return -1;
+	// 	}
+	// }
  
 	pr_info("max_speed_hz = %d\n", lcd_dev->lcd_spi_dev->max_speed_hz);
 	pr_info("chip_select = %d\n", (int)lcd_dev->lcd_spi_dev->chip_select);

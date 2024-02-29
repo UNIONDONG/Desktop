@@ -7,6 +7,10 @@
 #include "GUI_BMP.h"
 #include "button.h"
 
+static char s_Focus_Times = 25, s_Relex_Times = 10;
+
+int ADJUST_TIME_MODE = 0;
+
 int Welcome_Show(int fd)
 {
 	int ret = 0;
@@ -27,6 +31,89 @@ int Welcome_Show(int fd)
 	return ret;
 }
 
+int Costom_Times(int fd)
+{
+	int ret = 0;
+	char str[64];
+	int i = 0;
+	UWORD *BlackImage;
+	UDOUBLE Imagesize = LCD_1IN8_HEIGHT * LCD_1IN8_WIDTH * 2;
+	
+	if((BlackImage = (UWORD *)malloc(Imagesize)) == NULL) {
+		printf("Failed to apply for black memory...\r\n");
+		exit(0);
+	}
+	Paint_NewImage(BlackImage, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, 0, BLACK, 16);
+	Paint_DrawString_EN(25, 30, "Press Key2, Adjust Times ", &Font12, BLACK, YELLOW);
+	sprintf(str, "Focus Times: %d", s_Focus_Times);
+	Paint_DrawString_EN(25, 60, str, &Font12, BLACK, YELLOW);
+	sprintf(str, "Relex Times: %d", s_Relex_Times);
+	Paint_DrawString_EN(25, 90, str, &Font12, BLACK, YELLOW);
+
+	write(fd, BlackImage, Imagesize);
+
+	while(i < 4) {
+		if(Button_Status_Get()) {
+			ADJUST_TIME_MODE = 1;
+			Button_Status_Set(false);
+			Paint_Clear(BLACK);
+			Paint_DrawString_EN(25, 30, "Enter Adjust Times Mode", &Font12, BLACK, YELLOW);
+			sprintf(str, "Focus Times: %d", s_Focus_Times);
+			Paint_DrawString_EN(25, 60, str, &Font12, BLACK, YELLOW);
+			write(fd, BlackImage, Imagesize);
+			break;
+		}
+		sleep(1);
+		++i;
+	}
+
+	while(ADJUST_TIME_MODE) {
+		if(Button2_Status_Get()) {
+			s_Focus_Times+=5;
+			if (s_Focus_Times > 60)
+				s_Focus_Times = 25;
+			Button2_Status_Set(false);
+			Paint_Clear(BLACK);
+			Paint_DrawString_EN(25, 30, "Enter Adjust Times Mode", &Font12, BLACK, YELLOW);
+			sprintf(str, "Focus Times: %d", s_Focus_Times);
+			Paint_DrawString_EN(25, 60, str, &Font12, BLACK, YELLOW);
+			write(fd, BlackImage, Imagesize);
+		}
+
+		if(Button_Status_Get()) {
+			Button_Status_Set(false);
+			Paint_Clear(BLACK);
+			Paint_DrawString_EN(25, 30, "Enter Adjust Times Mode", &Font12, BLACK, YELLOW);
+			sprintf(str, "Relex Times: %d", s_Relex_Times);
+			Paint_DrawString_EN(25, 90, str, &Font12, BLACK, YELLOW);
+			write(fd, BlackImage, Imagesize);
+			break;
+		}
+	}
+
+	while(ADJUST_TIME_MODE) {
+		if(Button2_Status_Get()) {
+			s_Relex_Times+=5;
+			if (s_Relex_Times > 20)
+				s_Relex_Times = 5;
+			Button2_Status_Set(false);
+			Paint_Clear(BLACK);
+			Paint_DrawString_EN(25, 30, "Enter Adjust Times Mode", &Font12, BLACK, YELLOW);
+			sprintf(str, "Relex Times: %d", s_Relex_Times);
+			Paint_DrawString_EN(25, 90, str, &Font12, BLACK, YELLOW);
+			write(fd, BlackImage, Imagesize);
+		}
+
+		if(Button_Status_Get()) {
+			Button_Status_Set(false);
+			break;
+		}
+	}
+
+	return ret;
+
+}
+
 int Desktop_Focus(int fd)
 {
 	int ret = 0;
@@ -43,7 +130,7 @@ int Desktop_Focus(int fd)
 	Paint_NewImage(BlackImage, LCD_1IN8_WIDTH, LCD_1IN8_HEIGHT, 0, BLACK, 16);
 	Paint_Clear(BLACK);
 
-    sPaint_time.Min = 24;
+    sPaint_time.Min = s_Focus_Times - 1;
     sPaint_time.Sec = 59;
 
 	while (1) {

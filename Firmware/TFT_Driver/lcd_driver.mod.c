@@ -29,12 +29,6 @@ __attribute__((section("__versions"))) = {
 	{ 0xd633690a, "driver_unregister" },
 	{ 0xe85c13b, "__spi_register_driver" },
 	{ 0x8e865d3c, "arm_delay_ops" },
-	{ 0xfe990052, "gpio_free" },
-	{ 0xc1514a3b, "free_irq" },
-	{ 0xd6b8e852, "request_threaded_irq" },
-	{ 0xfee51f12, "irq_of_parse_and_map" },
-	{ 0x7ed47eaa, "gpiod_direction_input" },
-	{ 0x47229b5c, "gpio_request" },
 	{ 0x7772b225, "device_create" },
 	{ 0xb489cb8d, "__class_create" },
 	{ 0x99d31bfb, "cdev_add" },
@@ -50,7 +44,9 @@ __attribute__((section("__versions"))) = {
 	{ 0xf7d082ff, "cdev_del" },
 	{ 0xa3f23a4d, "class_destroy" },
 	{ 0x676c0ac6, "device_destroy" },
+	{ 0xefd6cf06, "__aeabi_unwind_cpp_pr0" },
 	{ 0xdb7305a1, "__stack_chk_fail" },
+	{ 0x7c32d0f0, "printk" },
 	{ 0x37a0cba, "kfree" },
 	{ 0xdf6bc1e7, "spi_sync" },
 	{ 0x5f754e5a, "memset" },
@@ -59,8 +55,6 @@ __attribute__((section("__versions"))) = {
 	{ 0x2bac60c1, "kmem_cache_alloc" },
 	{ 0xccf15c6e, "kmalloc_caches" },
 	{ 0x8f678b07, "__stack_chk_guard" },
-	{ 0xefd6cf06, "__aeabi_unwind_cpp_pr0" },
-	{ 0x7c32d0f0, "printk" },
 };
 
 static const char __module_depends[]
@@ -69,4 +63,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "E1D903A923FBFE561640B70");
+MODULE_INFO(srcversion, "27E617BDF84FB43FDC058BA");

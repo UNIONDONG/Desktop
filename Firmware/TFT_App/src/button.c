@@ -7,9 +7,11 @@
 #include "button.h"
 #include "custom_print.h"
 #define BUTTON_EVENT_PATH "/dev/input/event1"
+#define BUTTON_EVENT_PATH2 "/dev/input/event0"
 #define BUTTON_TYPE 
 
 bool g_button_flag = false;
+bool g_button2_flag = false;
 
 void Button_Status_Set(bool status)
 {
@@ -20,6 +22,17 @@ bool Button_Status_Get(void)
 {
 	return g_button_flag;
 }
+
+void Button2_Status_Set(bool status)
+{
+	g_button2_flag = status;
+}
+
+bool Button2_Status_Get(void)
+{
+	return g_button2_flag;
+}
+
 
 void *button_thread_handle()
 {
@@ -39,9 +52,41 @@ void *button_thread_handle()
         if (bytesRead == sizeof(struct input_event)) {
             if (key_event.type == EV_KEY && key_event.value == 1) {
                 printf("Key pressed: %d\n", key_event.code);
+				// Button_Status_Set(false);
             } else if (key_event.type == EV_KEY && key_event.value == 0) {
                 printf("Key released: %d\n", key_event.code);
 				Button_Status_Set(true);
+            }
+        } else {
+            perror("Error reading input event");
+            break;
+        }
+	}
+
+    close(fd);
+}
+
+void *button_thread_handle2()
+{
+	int fd;
+	struct input_event key_event;
+	sys_log(LOG_INFO, "button console");
+
+	fd = open(BUTTON_EVENT_PATH2, O_RDONLY);
+	if (fd == -1) {
+		sys_log(LOG_ERR, "Error Open input device");
+		exit(EXIT_FAILURE);
+	}
+
+	while (1) {
+		ssize_t bytesRead = read(fd, &key_event, sizeof(struct input_event));
+		
+        if (bytesRead == sizeof(struct input_event)) {
+            if (key_event.type == EV_KEY && key_event.value == 1) {
+                printf("Key2 pressed: %d\n", key_event.code);
+            } else if (key_event.type == EV_KEY && key_event.value == 0) {
+                printf("Key2 released: %d\n", key_event.code);
+				Button2_Status_Set(true);
             }
         } else {
             perror("Error reading input event");
@@ -57,7 +102,7 @@ int button_threads_init(void)
 	int ret = -1;
 	sys_log(LOG_INFO, "thread init");
 
-	pthread_t button_thread;
+	pthread_t button_thread, button_thread2;
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr , PTHREAD_CREATE_DETACHED);
@@ -66,5 +111,11 @@ int button_threads_init(void)
         sys_log(LOG_ERR, "create thread_1 failed");
         return -1;
     }
+    ret = pthread_create(&button_thread2, &attr, button_thread_handle2, NULL);
+    if (ret) {
+        sys_log(LOG_ERR, "create thread_2 failed");
+        return -1;
+    }
+
 	return 0;
 }

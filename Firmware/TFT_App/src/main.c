@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "tft_lcd.h"
 #include "button.h"
+#include "beep.h"
 
 #define LCD_DEVICE "/dev/ecspi_lcd"
 
@@ -23,7 +24,11 @@ int main(int argc, char *argv[])
 	}
 
 	Welcome_Show(fd);
-	sleep(3);
+	sleep(1);
+	Costom_Times(fd);
+    beep_init();
+    beep_shink();
+	sleep(1);
 	// Picture_Show(fd);
 	//sleep(3);
 	Desktop_Focus(fd);
@@ -39,5 +44,6 @@ int main(int argc, char *argv[])
 		printf("close file error!\n");
 		return -1;
 	}
+    beep_deinit();
 	return 0;
 }

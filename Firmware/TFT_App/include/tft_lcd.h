@@ -4,7 +4,7 @@
 #define LCD_1IN8_HEIGHT  128 //LCD height
 							 //
 extern int Welcome_Show(int fd);
-
+extern int Costom_Times(int fd);
 extern int Desktop_Focus(int fd);
 
 extern int Picture_Show(int fd);
