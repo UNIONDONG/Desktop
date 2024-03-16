@@ -1,0 +1,55 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/donge/WorkSpace/Program/Desktop/Firmware/TFT_App/src/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+ADJUST_TIME_MODE	tft_lcd.c	/^int ADJUST_TIME_MODE = 0;$/;"	v	typeref:typename:int
+BUTTON_EVENT_PATH	button.c	/^#define BUTTON_EVENT_PATH /;"	d	file:
+BUTTON_EVENT_PATH2	button.c	/^#define BUTTON_EVENT_PATH2 /;"	d	file:
+BUTTON_TYPE	button.c	/^#define BUTTON_TYPE /;"	d	file:
+Button2_Status_Get	button.c	/^bool Button2_Status_Get(void)$/;"	f	typeref:typename:bool
+Button2_Status_Set	button.c	/^void Button2_Status_Set(bool status)$/;"	f	typeref:typename:void
+Button_Status_Get	button.c	/^bool Button_Status_Get(void)$/;"	f	typeref:typename:bool
+Button_Status_Set	button.c	/^void Button_Status_Set(bool status)$/;"	f	typeref:typename:void
+Costom_Times	tft_lcd.c	/^int Costom_Times(int fd)$/;"	f	typeref:typename:int
+Desktop_Focus	tft_lcd.c	/^int Desktop_Focus(int fd)$/;"	f	typeref:typename:int
+Focus_Seek_Get	tft_lcd.c	/^int Focus_Seek_Get(int fd)$/;"	f	typeref:typename:int
+Picture_Show	tft_lcd.c	/^int Picture_Show(int fd)$/;"	f	typeref:typename:int
+Progress_bar_Init	tft_lcd.c	/^int Progress_bar_Init(int fd)$/;"	f	typeref:typename:int
+Progress_bar_Set	tft_lcd.c	/^int Progress_bar_Set(int fd, unsigned int percent)$/;"	f	typeref:typename:int
+Relex_Focus	tft_lcd.c	/^int Relex_Focus(int fd)$/;"	f	typeref:typename:int
+Set_Log_Lever	custom_print.c	/^void Set_Log_Lever(GLOBAL_LOG_LEVEL log_level) {$/;"	f	typeref:typename:void
+Tft_Deinit	tft_lcd.c	/^int Tft_Deinit(void)$/;"	f	typeref:typename:int
+Tft_Init	tft_lcd.c	/^int Tft_Init(void) {$/;"	f	typeref:typename:int
+Welcome_Show	tft_lcd.c	/^int Welcome_Show(int fd)$/;"	f	typeref:typename:int
+beep_deinit	beep.c	/^int beep_deinit(void)$/;"	f	typeref:typename:int
+beep_init	beep.c	/^int beep_init(void)$/;"	f	typeref:typename:int
+beep_off	beep.c	/^int beep_off(void)$/;"	f	typeref:typename:int
+beep_on	beep.c	/^int beep_on(void)$/;"	f	typeref:typename:int
+beep_shink	beep.c	/^int beep_shink(void)$/;"	f	typeref:typename:int
+button_thread_handle	button.c	/^void *button_thread_handle()$/;"	f	typeref:typename:void *
+button_thread_handle2	button.c	/^void *button_thread_handle2()$/;"	f	typeref:typename:void *
+button_threads_init	button.c	/^int button_threads_init(void)$/;"	f	typeref:typename:int
+fd	main.c	/^int fd;$/;"	v	typeref:typename:int
+fd	tft_lcd.c	/^static int fd;$/;"	v	typeref:typename:int	file:
+g_Image	tft_lcd.c	/^UWORD *g_Image;$/;"	v	typeref:typename:UWORD *
+g_Image_Size	tft_lcd.c	/^UDOUBLE g_Image_Size = LCD_1IN8_HEIGHT * LCD_1IN8_WIDTH * 2;$/;"	v	typeref:typename:UDOUBLE
+g_button2_flag	button.c	/^bool g_button2_flag = false;$/;"	v	typeref:typename:bool
+g_button_flag	button.c	/^bool g_button_flag = false;$/;"	v	typeref:typename:bool
+g_log_level	custom_print.c	/^GLOBAL_LOG_LEVEL g_log_level = LOG_INFO;        \/\/  default log level$/;"	v	typeref:typename:GLOBAL_LOG_LEVEL
+global_log_level_string	custom_print.c	/^const char global_log_level_string[8][10] = {"EMERG", "ALERT", "CRIT", "ERR", "WARNING", "NOTICE/;"	v	typeref:typename:const char[8][10]
+main	main.c	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+s_Focus_Times	tft_lcd.c	/^static char s_Focus_Times = 25, s_Relex_Times = 10;$/;"	v	typeref:typename:char	file:
+s_Focus_Total_Times	tft_lcd.c	/^static int s_Focus_Total_Times = 0;$/;"	v	typeref:typename:int	file:
+s_Relex_Times	tft_lcd.c	/^static char s_Focus_Times = 25, s_Relex_Times = 10;$/;"	v	typeref:typename:char	file:
+s_pbar_x_end	tft_lcd.c	/^static unsigned int s_pbar_x_start = 15, s_pbar_x_end = 150;$/;"	v	typeref:typename:unsigned int	file:
+s_pbar_x_start	tft_lcd.c	/^static unsigned int s_pbar_x_start = 15, s_pbar_x_end = 150;$/;"	v	typeref:typename:unsigned int	file:
+s_pbar_y_end	tft_lcd.c	/^static unsigned int s_pbar_y_start = 100, s_pbar_y_end = 110;$/;"	v	typeref:typename:unsigned int	file:
+s_pbar_y_start	tft_lcd.c	/^static unsigned int s_pbar_y_start = 100, s_pbar_y_end = 110;$/;"	v	typeref:typename:unsigned int	file:
+sys_log	custom_print.c	/^void sys_log(int level, const char *fmt, ...) {$/;"	f	typeref:typename:void
